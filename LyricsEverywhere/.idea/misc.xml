@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_scrolling.xml" value="0.2" />
+        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml" value="0.264" />
+        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_lyrics_page.xml" value="0.27692307692307694" />
+        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/layout_item.xml" value="0.264" />
+        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/menu.xml" value="0.1" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21837606837606838" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/background_splashscreen.xml" value="0.14957264957264957" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.21837606837606838" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_launcher_background.xml" value="0.21837606837606838" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.21837606837606838" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml" value="0.152" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_scrolling.xml" value="0.2" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml" value="0.264" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_scrolling.xml" value="0.1" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_first.xml" value="0.2" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml" value="0.12" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml" value="0.1539855072463768" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_second.xml" value="0.264" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml" value="0.2" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/test_track.xml" value="0.20512820512820512" />
+        <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.17962962962962964" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.17962962962962964" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml" value="0.19895833333333332" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml" value="0.19895833333333332" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_scrolling.xml" value="0.22554347826086957" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml" value="0.22554347826086957" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml" value="0.19895833333333332" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml" value="0.19895833333333332" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml" value="0.19895833333333332" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml" value="0.19895833333333332" />
+        <entry key="..\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19895833333333332" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.259375" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.24427083333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.259375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/layout/activity_recents.xml" value="0.12291666666666666" />
+        <entry key="app/src/main/res/layout/content_recents.xml" value="0.12291666666666666" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.228125" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_lyrics_page.xml" value="0.228125" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/layout/fragment_recents.xml" value="0.228125" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/layout/grid_item.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/menu/items.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/menu/menu.xml" value="0.24322916666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+</project>

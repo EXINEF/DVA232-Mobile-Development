@@ -1,0 +1,151 @@
+Index: app/src/main/java/com/group5/lyrics/db/DatabaseHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group5.lyrics.db;\r\n\r\nimport android.content.ContentValues;\r\nimport android.content.Context;\r\nimport android.database.Cursor;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.database.sqlite.SQLiteException;\r\nimport android.database.sqlite.SQLiteOpenHelper;\r\nimport android.graphics.Bitmap;\r\nimport android.util.Log;\r\n\r\nimport com.group5.lyrics.models.song.Album;\r\nimport com.group5.lyrics.models.song.Artist;\r\nimport com.group5.lyrics.models.song.Lyrics;\r\nimport com.group5.lyrics.models.song.Track;\r\nimport com.group5.lyrics.models.song.TrackInterface;\r\nimport com.group5.lyrics.models.user.UserInterface;\r\nimport com.group5.lyrics.models.user.UserSettingsInterface;\r\n\r\nimport java.io.ByteArrayOutputStream;\r\nimport java.util.ArrayList;\r\nimport java.util.Calendar;\r\nimport java.util.Date;\r\nimport java.util.GregorianCalendar;\r\nimport java.util.List;\r\n\r\npublic class DatabaseHelper extends SQLiteOpenHelper implements DatabaseHelperInterface {\r\n    // If you change the database schema, you must increment the database version.\r\n    public static final int DATABASE_VERSION = 1;\r\n    public static final String DATABASE_NAME = \"database.db\";\r\n\r\n    public DatabaseHelper(Context context) {\r\n        super(context, DATABASE_NAME, null, DATABASE_VERSION);\r\n    }\r\n\r\n    public void onCreate(SQLiteDatabase db) {\r\n        try{\r\n            db.execSQL(CREATE_TABLE_FOR_SONGS);\r\n            db.execSQL(CREATE_TABLE_FOR_SETTINGS);\r\n        } catch (SQLiteException exception){\r\n            Log.e(\"DB ALREADY CREATED: \",exception.getMessage());\r\n        }\r\n    }\r\n\r\n    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {\r\n        // This database is only a cache for online data, so its upgrade policy is\r\n        // to simply to discard the data and start over\r\n        db.execSQL(DELETE_TABLE_SONGS);\r\n        db.execSQL(DELETE_TABLE_SETTINGS);\r\n        onCreate(db);\r\n    }\r\n\r\n    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {\r\n        onUpgrade(db, oldVersion, newVersion);\r\n    }\r\n    @Override\r\n    public List<TrackInterface> getAllTracks(SQLiteDatabase db) {\r\n        List<TrackInterface> tracks = new ArrayList<>();\r\n        Cursor cursor = db.rawQuery( \"select * from \"+ DatabaseContract.SongsEntry.TABLE_NAME, null );\r\n        cursor.moveToFirst();\r\n        while(cursor.isAfterLast() == false) {\r\n\r\n            TrackInterface track = new Track(\r\n                    cursor.getInt(0),\r\n                    cursor.getString(1),\r\n                    new Artist(cursor.getInt(2),cursor.getString(3)),\r\n                    new Album(cursor.getInt(4),cursor.getString(5)),\r\n                    new Lyrics(cursor.getInt(6),cursor.getString(7)),\r\n                    cursor.getInt(8),\r\n                    cursor.getInt(9),\r\n                    cursor.getInt(10),\r\n                    cursor.getInt(11),\r\n                    null,//cursor.getBlob(12),\r\n                    cursor.getString(13)\r\n            );\r\n\r\n            tracks.add(track);\r\n            cursor.moveToNext();\r\n        }\r\n        return tracks;\r\n    }\r\n\r\n    @Override\r\n    public TrackInterface getTrackById(SQLiteDatabase db, int id){\r\n        // Define a projection that specifies which columns from the database\r\n        // you will actually use after this query.\r\n        String[] projection = {\r\n                DatabaseContract.SongsEntry.TRACK_ID,\r\n                DatabaseContract.SongsEntry.TRACK_NAME,\r\n                DatabaseContract.SongsEntry.ARTIST_ID,\r\n                DatabaseContract.SongsEntry.ARTIST_NAME,\r\n                DatabaseContract.SongsEntry.ALBUM_ID,\r\n                DatabaseContract.SongsEntry.ALBUM_NAME,\r\n                DatabaseContract.SongsEntry.LYRICS_ID,\r\n                DatabaseContract.SongsEntry.LYRICS_CONTENT,\r\n                DatabaseContract.SongsEntry.IS_EXPLICIT,\r\n                DatabaseContract.SongsEntry.HAS_LYRICS,\r\n                DatabaseContract.SongsEntry.IS_FAVORITE,\r\n                DatabaseContract.SongsEntry.IS_RECENT,\r\n                DatabaseContract.SongsEntry.IMG,\r\n                DatabaseContract.SongsEntry.CREATE_DATETIME\r\n        };\r\n\r\n        // Filter results WHERE \"title\" = 'My Title'\r\n        String selection = DatabaseContract.SongsEntry.TRACK_ID + \" = ?\";\r\n        String[] selectionArgs = {String.valueOf(id)};\r\n\r\n        // How you want the results sorted in the resulting Cursor\r\n        String sortOrder = DatabaseContract.SongsEntry.TRACK_ID + \" DESC\";\r\n\r\n        Cursor cursor = db.query(\r\n                DatabaseContract.SongsEntry.TABLE_NAME,   // The table to query\r\n                projection,             // The array of columns to return (pass null to get all)\r\n                selection,              // The columns for the WHERE clause\r\n                selectionArgs,          // The values for the WHERE clause\r\n                null,                   // don't group the rows\r\n                null,                   // don't filter by row groups\r\n                sortOrder              // The sort order\r\n        );\r\n\r\n        TrackInterface song = null;\r\n        while(cursor.moveToNext()) {\r\n            Log.e(\" TRACK NAME DATABASE \",cursor.getString(1));\r\n            song = new Track(\r\n                    cursor.getInt(0),\r\n                    cursor.getString(1),\r\n                    new Artist(cursor.getInt(2),cursor.getString(3)),\r\n                    new Album(cursor.getInt(4),cursor.getString(5)),\r\n                    new Lyrics(cursor.getInt(6),cursor.getString(7)),\r\n                    cursor.getInt(8),\r\n                    cursor.getInt(9),\r\n                    cursor.getInt(10),\r\n                    cursor.getInt(11)\r\n                    // cursor.getBlob(12),\r\n                    // cursor.getString(13)\r\n            );\r\n            Log.d(\"\\n SONG FROM DATABASE \",song.toString());\r\n        }\r\n        cursor.close();\r\n        return song;\r\n    }\r\n\r\n    @Override\r\n    public long addTrack(SQLiteDatabase db, TrackInterface track) {\r\n        // Create a new map of values, where column names are the keys\r\n        ContentValues values = new ContentValues();\r\n        values.put(DatabaseContract.SongsEntry.TRACK_ID, track.getId());\r\n        values.put(DatabaseContract.SongsEntry.TRACK_NAME, track.getName());\r\n        values.put(DatabaseContract.SongsEntry.ARTIST_ID, track.getArtist().getId());\r\n        values.put(DatabaseContract.SongsEntry.ARTIST_NAME, track.getArtist().getName());\r\n        values.put(DatabaseContract.SongsEntry.ALBUM_ID, track.getAlbum().getId());\r\n        values.put(DatabaseContract.SongsEntry.ALBUM_NAME, track.getAlbum().getName());\r\n        values.put(DatabaseContract.SongsEntry.LYRICS_ID, track.getLyrics().getId());\r\n        values.put(DatabaseContract.SongsEntry.LYRICS_CONTENT, track.getLyrics().getContent());\r\n        values.put(DatabaseContract.SongsEntry.IS_EXPLICIT, track.isExplicit());\r\n        values.put(DatabaseContract.SongsEntry.HAS_LYRICS, track.hasLyrics());\r\n        values.put(DatabaseContract.SongsEntry.IS_FAVORITE, 0);\r\n        values.put(DatabaseContract.SongsEntry.IS_RECENT, 1);\r\n        values.put(DatabaseContract.SongsEntry.IMG, getBitmapAsByteArray(track.getImg()));\r\n        values.put(DatabaseContract.SongsEntry.CREATE_DATETIME, getTimeNow().toString()); // TODO add something automatic to store the time\r\n\r\n        long row = -1;\r\n        // Insert the new row, returning the primary key value of the new row\r\n        try {\r\n            row = db.insert(DatabaseContract.SongsEntry.TABLE_NAME, null, values);\r\n        }catch (Exception e){\r\n            System.out.println(e.getMessage());\r\n        }\r\n        return row;\r\n    }\r\n\r\n    @Override\r\n    public long removeTrack(SQLiteDatabase db, TrackInterface track) {\r\n        // TODO IMPLEMENTS\r\n        return 0;\r\n    }\r\n\r\n    @Override\r\n    public long removeTrack(SQLiteDatabase db, int id) {\r\n        Cursor cursor = db.rawQuery( \"DELETE FROM \" + DatabaseContract.SongsEntry.TABLE_NAME + \" WHERE track_id = \" + id, null );\r\n        return 0;\r\n    }\r\n\r\n    @Override\r\n    public long addUserSettings(UserSettingsInterface userSetting) {\r\n        // Gets the data repository in write mode\r\n        SQLiteDatabase db = this.getWritableDatabase();\r\n        // Create a new map of values, where column names are the keys\r\n        ContentValues values = new ContentValues();\r\n        values.put(DatabaseContract.SettingsEntry.THEME, \"RED\");\r\n        values.put(DatabaseContract.SettingsEntry.DARK_MODE, 1);\r\n        values.put(DatabaseContract.SettingsEntry.SCREEN_ALWAYS_ACTIVE, 1);\r\n        values.put(DatabaseContract.SettingsEntry.FAVORITE_LYRICS_OFFLINE, 1);\r\n        values.put(DatabaseContract.SettingsEntry.RECENT_LYRICS_OFFLINE, 1);\r\n        values.put(DatabaseContract.SettingsEntry.MAX_NUM_RECENT_TO_SAVE, 10);\r\n        values.put(DatabaseContract.SettingsEntry.RECEIVE_NOTIFICATION, 1);\r\n        values.put(DatabaseContract.SettingsEntry.BUBBLE_NOTIFICATION, 1);\r\n        values.put(DatabaseContract.SettingsEntry.FONT, \"Roboto\");\r\n\r\n        // Insert the new row, returning the primary key value of the new row\r\n        return db.insert(DatabaseContract.SettingsEntry.TABLE_NAME, null, values);\r\n    }\r\n\r\n    // TODO finish the table with the right attributes in the right order and types\r\n    private static final String CREATE_TABLE_FOR_SONGS =\r\n            \"CREATE TABLE \" + DatabaseContract.SongsEntry.TABLE_NAME + \" (\" +\r\n                    DatabaseContract.SongsEntry.TRACK_ID + \" INTEGER PRIMARY KEY,\" +\r\n                    DatabaseContract.SongsEntry.TRACK_NAME + \" TEXT,\" +\r\n                    DatabaseContract.SongsEntry.ARTIST_ID + \" INTERGER,\" +\r\n                    DatabaseContract.SongsEntry.ARTIST_NAME + \" TEXT,\" +\r\n                    DatabaseContract.SongsEntry.ALBUM_ID + \" INTERGER,\" +\r\n                    DatabaseContract.SongsEntry.ALBUM_NAME + \" TEXT,\" +\r\n                    DatabaseContract.SongsEntry.LYRICS_ID + \" INTERGER,\" +\r\n                    DatabaseContract.SongsEntry.LYRICS_CONTENT + \" TEXT,\" +\r\n                    DatabaseContract.SongsEntry.IS_EXPLICIT + \" INTERGER,\" +\r\n                    DatabaseContract.SongsEntry.HAS_LYRICS + \" INTERGER,\" +\r\n                    DatabaseContract.SongsEntry.IS_FAVORITE + \" INTERGER,\" +\r\n                    DatabaseContract.SongsEntry.IS_RECENT + \" INTERGER,\" +\r\n                    DatabaseContract.SongsEntry.IMG + \" BLOB,\" +\r\n                    DatabaseContract.SongsEntry.CREATE_DATETIME + \" DATE)\";\r\n\r\n    //TODO check if the type are defined in the proper way\r\n    private static final String CREATE_TABLE_FOR_SETTINGS =\r\n            \"CREATE TABLE \" + DatabaseContract.SettingsEntry.TABLE_NAME + \"(\" +\r\n                    DatabaseContract.SettingsEntry.THEME + \" TEXT,\" +\r\n                    DatabaseContract.SettingsEntry.DARK_MODE + \" INTEGER,\" +\r\n                    DatabaseContract.SettingsEntry.SCREEN_ALWAYS_ACTIVE + \" INTEGER,\" +\r\n                    DatabaseContract.SettingsEntry.FAVORITE_LYRICS_OFFLINE + \" INTEGER,\" +\r\n                    DatabaseContract.SettingsEntry.RECENT_LYRICS_OFFLINE + \" INTEGER,\" +\r\n                    DatabaseContract.SettingsEntry.MAX_NUM_RECENT_TO_SAVE + \" INTEGER,\" +\r\n                    DatabaseContract.SettingsEntry.RECEIVE_NOTIFICATION + \" INTEGER,\" +\r\n                    DatabaseContract.SettingsEntry.BUBBLE_NOTIFICATION + \" INTEGER,\" +\r\n                    DatabaseContract.SettingsEntry.FONT + \"TEXT)\";\r\n\r\n    private static final String DELETE_TABLE_SONGS =\r\n            \"DROP TABLE IF EXISTS \" + DatabaseContract.SongsEntry.TABLE_NAME;\r\n\r\n    private static final String DELETE_TABLE_SETTINGS =\r\n            \"DROP TABLE IF EXISTS \" + DatabaseContract.SettingsEntry.TABLE_NAME;\r\n\r\n    private byte[] getBitmapAsByteArray(Bitmap bitmap) {\r\n        if(bitmap == null)\r\n            return new byte['a']; //TODO IMPLEMENT\r\n        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();\r\n        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream);\r\n        return outputStream.toByteArray();\r\n    }\r\n\r\n    private Date getTimeNow(){\r\n        Calendar c = new GregorianCalendar();\r\n        Log.e(\"DATE GET: \",c.getTime().toString());\r\n        return c.getTime();\r\n\r\n    }\r\n\r\n\r\n}\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group5/lyrics/db/DatabaseHelper.java b/app/src/main/java/com/group5/lyrics/db/DatabaseHelper.java
+--- a/app/src/main/java/com/group5/lyrics/db/DatabaseHelper.java	(revision de2b55a0c7cefde048622afb20315e35ee471ceb)
++++ b/app/src/main/java/com/group5/lyrics/db/DatabaseHelper.java	(date 1640614949274)
+@@ -34,11 +34,11 @@
+     }
+ 
+     public void onCreate(SQLiteDatabase db) {
+-        try{
++        try {
+             db.execSQL(CREATE_TABLE_FOR_SONGS);
+             db.execSQL(CREATE_TABLE_FOR_SETTINGS);
+-        } catch (SQLiteException exception){
+-            Log.e("DB ALREADY CREATED: ",exception.getMessage());
++        } catch (SQLiteException exception) {
++            Log.e("DB ALREADY CREATED: ", exception.getMessage());
+         }
+     }
+ 
+@@ -53,19 +53,20 @@
+     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+         onUpgrade(db, oldVersion, newVersion);
+     }
++
+     @Override
+     public List<TrackInterface> getAllTracks(SQLiteDatabase db) {
+         List<TrackInterface> tracks = new ArrayList<>();
+-        Cursor cursor = db.rawQuery( "select * from "+ DatabaseContract.SongsEntry.TABLE_NAME, null );
++        Cursor cursor = db.rawQuery("select * from " + DatabaseContract.SongsEntry.TABLE_NAME, null);
+         cursor.moveToFirst();
+-        while(cursor.isAfterLast() == false) {
++        while (cursor.isAfterLast() == false) {
+ 
+             TrackInterface track = new Track(
+                     cursor.getInt(0),
+                     cursor.getString(1),
+-                    new Artist(cursor.getInt(2),cursor.getString(3)),
+-                    new Album(cursor.getInt(4),cursor.getString(5)),
+-                    new Lyrics(cursor.getInt(6),cursor.getString(7)),
++                    new Artist(cursor.getInt(2), cursor.getString(3)),
++                    new Album(cursor.getInt(4), cursor.getString(5)),
++                    new Lyrics(cursor.getInt(6), cursor.getString(7)),
+                     cursor.getInt(8),
+                     cursor.getInt(9),
+                     cursor.getInt(10),
+@@ -81,7 +82,7 @@
+     }
+ 
+     @Override
+-    public TrackInterface getTrackById(SQLiteDatabase db, int id){
++    public TrackInterface getTrackById(SQLiteDatabase db, int id) {
+         // Define a projection that specifies which columns from the database
+         // you will actually use after this query.
+         String[] projection = {
+@@ -119,14 +120,14 @@
+         );
+ 
+         TrackInterface song = null;
+-        while(cursor.moveToNext()) {
+-            Log.e(" TRACK NAME DATABASE ",cursor.getString(1));
++        while (cursor.moveToNext()) {
++            Log.e(" TRACK NAME DATABASE ", cursor.getString(1));
+             song = new Track(
+                     cursor.getInt(0),
+                     cursor.getString(1),
+-                    new Artist(cursor.getInt(2),cursor.getString(3)),
+-                    new Album(cursor.getInt(4),cursor.getString(5)),
+-                    new Lyrics(cursor.getInt(6),cursor.getString(7)),
++                    new Artist(cursor.getInt(2), cursor.getString(3)),
++                    new Album(cursor.getInt(4), cursor.getString(5)),
++                    new Lyrics(cursor.getInt(6), cursor.getString(7)),
+                     cursor.getInt(8),
+                     cursor.getInt(9),
+                     cursor.getInt(10),
+@@ -134,7 +135,7 @@
+                     // cursor.getBlob(12),
+                     // cursor.getString(13)
+             );
+-            Log.d("\n SONG FROM DATABASE ",song.toString());
++            Log.d("\n SONG FROM DATABASE ", song.toString());
+         }
+         cursor.close();
+         return song;
+@@ -163,7 +164,7 @@
+         // Insert the new row, returning the primary key value of the new row
+         try {
+             row = db.insert(DatabaseContract.SongsEntry.TABLE_NAME, null, values);
+-        }catch (Exception e){
++        } catch (Exception e) {
+             System.out.println(e.getMessage());
+         }
+         return row;
+@@ -177,7 +178,7 @@
+ 
+     @Override
+     public long removeTrack(SQLiteDatabase db, int id) {
+-        Cursor cursor = db.rawQuery( "DELETE FROM " + DatabaseContract.SongsEntry.TABLE_NAME + " WHERE track_id = " + id, null );
++        Cursor cursor = db.rawQuery("DELETE FROM " + DatabaseContract.SongsEntry.TABLE_NAME + " WHERE track_id = " + id, null);
+         return 0;
+     }
+ 
+@@ -239,16 +240,16 @@
+             "DROP TABLE IF EXISTS " + DatabaseContract.SettingsEntry.TABLE_NAME;
+ 
+     private byte[] getBitmapAsByteArray(Bitmap bitmap) {
+-        if(bitmap == null)
++        if (bitmap == null)
+             return new byte['a']; //TODO IMPLEMENT
+         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+         bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream);
+         return outputStream.toByteArray();
+     }
+ 
+-    private Date getTimeNow(){
++    private Date getTimeNow() {
+         Calendar c = new GregorianCalendar();
+-        Log.e("DATE GET: ",c.getTime().toString());
++        Log.e("DATE GET: ", c.getTime().toString());
+         return c.getTime();
+ 
+     }
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml\" value=\"0.152\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_first.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.12\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml\" value=\"0.1539855072463768\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_second.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/test_track.xml\" value=\"0.20512820512820512\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_account_circle_24.xml\" value=\"0.17962962962962964\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.17962962962962964\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_scrolling.xml\" value=\"0.22554347826086957\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml\" value=\"0.22554347826086957\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml\" value=\"0.259375\" />\r\n        <entry key=\"app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.259375\" />\r\n        <entry key=\"app/src/main/res/layout/activity_main.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/activity_recents.xml\" value=\"0.12291666666666666\" />\r\n        <entry key=\"app/src/main/res/layout/content_recents.xml\" value=\"0.12291666666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_first.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_home.xml\" value=\"0.335\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_notifications.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_second.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/grid_item.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/login.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/menu/items.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/menu/menu.xml\" value=\"0.24322916666666666\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"11\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision de2b55a0c7cefde048622afb20315e35ee471ceb)
++++ b/.idea/misc.xml	(date 1640605555919)
+@@ -3,6 +3,13 @@
+   <component name="DesignSurface">
+     <option name="filePathToZoomLevelMap">
+       <map>
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml" value="0.12360688956433637" />
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml" value="0.12360688956433637" />
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml" value="0.12360688956433637" />
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_first.xml" value="0.12360688956433637" />
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml" value="0.264" />
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_second.xml" value="0.12360688956433637" />
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml" value="0.12360688956433637" />
+         <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml" value="0.2" />
+         <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml" value="0.152" />
+         <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml" value="0.264" />

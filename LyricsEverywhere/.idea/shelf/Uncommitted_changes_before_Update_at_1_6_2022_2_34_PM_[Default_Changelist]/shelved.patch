@@ -1,0 +1,387 @@
+Index: app/src/main/res/layout/activity_searchlist.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".ui.home.HomeFragment\">\r\n\r\n\r\n    <FrameLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n\r\n        <androidx.cardview.widget.CardView\r\n            android:id=\"@+id/songs\"\r\n            android:layout_width=\"390dp\"\r\n            android:layout_height=\"699dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginStart=\"10dp\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:layout_marginEnd=\"10dp\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            app:cardCornerRadius=\"6dp\">\r\n\r\n\r\n            <ScrollView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\">\r\n\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/Allsong\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"vertical\" />\r\n\r\n            </ScrollView>\r\n\r\n        </androidx.cardview.widget.CardView>\r\n\r\n    </FrameLayout>\r\n\r\n</ScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_searchlist.xml b/app/src/main/res/layout/activity_searchlist.xml
+--- a/app/src/main/res/layout/activity_searchlist.xml	(revision ca6923ec8a0ce4cf30d04b7d74def6e4bb76e453)
++++ b/app/src/main/res/layout/activity_searchlist.xml	(date 1641468537253)
+@@ -6,16 +6,17 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:orientation="vertical"
+-    tools:context=".ui.home.HomeFragment">
++    >
+ 
+ 
+     <FrameLayout
++        android:id="@+id/searchList"
+         android:layout_width="match_parent"
+-        android:layout_height="match_parent">
++        android:layout_height="wrap_content"
++        android:orientation="vertical">
+ 
+ 
+         <androidx.cardview.widget.CardView
+-            android:id="@+id/songs"
+             android:layout_width="390dp"
+             android:layout_height="699dp"
+             android:layout_gravity="center"
+Index: app/src/main/res/layout/activity_recents.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".ui.home.HomeFragment\">\r\n\r\n\r\n    <FrameLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n\r\n        <androidx.cardview.widget.CardView\r\n            android:id=\"@+id/recents\"\r\n            android:layout_width=\"390dp\"\r\n            android:layout_height=\"699dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginStart=\"10dp\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:layout_marginEnd=\"10dp\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            app:cardCornerRadius=\"6dp\">\r\n\r\n\r\n            <ScrollView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\">\r\n\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/recentAll1\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"vertical\" />\r\n\r\n            </ScrollView>\r\n\r\n        </androidx.cardview.widget.CardView>\r\n\r\n    </FrameLayout>\r\n\r\n</ScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_recents.xml b/app/src/main/res/layout/activity_recents.xml
+--- a/app/src/main/res/layout/activity_recents.xml	(revision ca6923ec8a0ce4cf30d04b7d74def6e4bb76e453)
++++ b/app/src/main/res/layout/activity_recents.xml	(date 1641475383473)
+@@ -10,8 +10,10 @@
+ 
+ 
+     <FrameLayout
++        android:id="@+id/recentsFragment"
+         android:layout_width="match_parent"
+-        android:layout_height="match_parent">
++        android:layout_height="wrap_content"
++        android:orientation="vertical">
+ 
+ 
+         <androidx.cardview.widget.CardView
+Index: app/src/main/java/com/group5/lyrics/Recents.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group5.lyrics;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.ComponentName;\r\nimport android.content.Intent;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.graphics.Typeface;\r\nimport android.graphics.drawable.GradientDrawable;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.AbsListView;\r\nimport android.widget.GridLayout;\r\nimport android.widget.ImageButton;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.group5.lyrics.api.Api;\r\nimport com.group5.lyrics.api.VolleyResponseListenerLyrics;\r\nimport com.group5.lyrics.db.DatabaseHelper;\r\nimport com.group5.lyrics.db.Loader;\r\nimport com.group5.lyrics.db.LoaderInterface;\r\nimport com.group5.lyrics.models.song.LyricsInterface;\r\n\r\nimport org.json.JSONException;\r\n\r\npublic class Recents extends Fragment {\r\n\r\n    @SuppressLint(\"ResourceType\")\r\n    public View onCreateView(@NonNull LayoutInflater inflater,\r\n                             ViewGroup container, Bundle savedInstanceState) {\r\n\r\n        View root2 = inflater.inflate(R.layout.activity_recents, container, false);\r\n        DatabaseHelper dbHelper = new DatabaseHelper(getContext());\r\n        SQLiteDatabase db = dbHelper.getWritableDatabase();\r\n        //dbHelper.addTrack(db, TestTrack.getTestTrack());\r\n        LoaderInterface loader = new Loader(dbHelper);\r\n        displayAllRecents(root2, loader);\r\n        return root2;\r\n    }\r\n\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    void displayAllRecents(View root, LoaderInterface loader) {\r\n\r\n        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(\r\n                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);\r\n        LinearLayout linearLayoutRecents = root.findViewById(R.id.recentAll1);\r\n\r\n        if (loader.getAllRecentsTracks().isEmpty()) {\r\n        } else {\r\n            for (int i = 0; i < loader.getAllRecentsTracks().size(); i++) {\r\n                createGridTrackAndDisplayRecents(params, linearLayoutRecents, loader.getAllRecentsTracks().get(i).getName(), loader.getAllRecentsTracks().get(i).getId());\r\n            }\r\n        }\r\n\r\n    }\r\n\r\n    private void createGridTrackAndDisplayRecents(RelativeLayout.LayoutParams params, LinearLayout linearLayoutRecents, String s, int id) {\r\n        RelativeLayout newTrack = new RelativeLayout(this.getContext());\r\n        newTrack.setLayoutParams(params);\r\n        TextView text = new TextView(this.getContext());\r\n        text.setId(View.generateViewId());\r\n        text.setText(s);\r\n        ImageButton img = new ImageButton(this.getContext());\r\n        params.setMargins(10, 10, 10, 0);\r\n        img.setBackgroundResource(R.drawable.cavalcade);\r\n        img.setLayoutParams(params);\r\n        img.setLayoutParams(new AbsListView.LayoutParams(190, 180));\r\n        params = new RelativeLayout.LayoutParams(1000, 60);\r\n        params.setMargins(190, 10, 10, 10);\r\n        newTrack.addView(img);\r\n        text.setLayoutParams(params);\r\n        text.setTypeface(null, Typeface.BOLD_ITALIC);\r\n        newTrack.addView(text);\r\n        params = new RelativeLayout.LayoutParams(1000, 60);\r\n        params.setMargins(190, 50, 10, 10);\r\n        TextView t = new TextView(this.getContext());\r\n        //TODO AGGIUNGERE NOME AUTORE E FOTO DELL'ALBUM GIUSTA\r\n        t.setText(\"Author:\");\r\n        t.setLayoutParams(params);\r\n        newTrack.addView(t);\r\n        linearLayoutRecents.addView(newTrack);\r\n        //per il bordo alla textview\r\n        GradientDrawable border = new GradientDrawable();\r\n        border.setStroke(2, 0xFF000000); //black border with full opacity\r\n        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {\r\n            newTrack.setBackgroundDrawable(border);\r\n        } else {\r\n            newTrack.setBackground(border);\r\n        }\r\n\r\n        if (newTrack.getParent() != null) {\r\n            ((ViewGroup) newTrack.getParent()).removeView(newTrack);\r\n        }\r\n\r\n        newTrack.setOnClickListener(v -> {\r\n                    Intent activity = new Intent(v.getContext(), LyricsPage.class);\r\n                    activity.putExtra(\"track_id\", id);\r\n                    startActivity(activity);\r\n                });\r\n        linearLayoutRecents.addView(newTrack);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group5/lyrics/Recents.java b/app/src/main/java/com/group5/lyrics/Recents.java
+--- a/app/src/main/java/com/group5/lyrics/Recents.java	(revision ca6923ec8a0ce4cf30d04b7d74def6e4bb76e453)
++++ b/app/src/main/java/com/group5/lyrics/Recents.java	(date 1641476005992)
+@@ -13,6 +13,7 @@
+ import android.view.View;
+ import android.view.ViewGroup;
+ import android.widget.AbsListView;
++import android.widget.FrameLayout;
+ import android.widget.GridLayout;
+ import android.widget.ImageButton;
+ import android.widget.LinearLayout;
+@@ -21,6 +22,8 @@
+ 
+ import androidx.annotation.NonNull;
+ import androidx.fragment.app.Fragment;
++import androidx.fragment.app.FragmentManager;
++import androidx.fragment.app.FragmentTransaction;
+ 
+ import com.group5.lyrics.api.Api;
+ import com.group5.lyrics.api.VolleyResponseListenerLyrics;
+@@ -28,22 +31,22 @@
+ import com.group5.lyrics.db.Loader;
+ import com.group5.lyrics.db.LoaderInterface;
+ import com.group5.lyrics.models.song.LyricsInterface;
++import com.group5.lyrics.models.song.TrackInterface;
+ 
+ import org.json.JSONException;
+ 
+ public class Recents extends Fragment {
+-
++    View root;
+     @SuppressLint("ResourceType")
+     public View onCreateView(@NonNull LayoutInflater inflater,
+                              ViewGroup container, Bundle savedInstanceState) {
+-
+-        View root2 = inflater.inflate(R.layout.activity_recents, container, false);
++        root = inflater.inflate(R.layout.activity_recents, container, false);
+         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+         SQLiteDatabase db = dbHelper.getWritableDatabase();
+         //dbHelper.addTrack(db, TestTrack.getTestTrack());
+         LoaderInterface loader = new Loader(dbHelper);
+-        displayAllRecents(root2, loader);
+-        return root2;
++        displayAllRecents(root, loader);
++        return root;
+     }
+ 
+     public void onCreate(Bundle savedInstanceState) {
+@@ -59,18 +62,18 @@
+         if (loader.getAllRecentsTracks().isEmpty()) {
+         } else {
+             for (int i = 0; i < loader.getAllRecentsTracks().size(); i++) {
+-                createGridTrackAndDisplayRecents(params, linearLayoutRecents, loader.getAllRecentsTracks().get(i).getName(), loader.getAllRecentsTracks().get(i).getId());
++                createGridTrackAndDisplayRecents(params, linearLayoutRecents, loader.getAllRecentsTracks().get(i));
+             }
+         }
+ 
+     }
+ 
+-    private void createGridTrackAndDisplayRecents(RelativeLayout.LayoutParams params, LinearLayout linearLayoutRecents, String s, int id) {
++    private void createGridTrackAndDisplayRecents(RelativeLayout.LayoutParams params, LinearLayout linearLayoutRecents, TrackInterface track) {
+         RelativeLayout newTrack = new RelativeLayout(this.getContext());
+         newTrack.setLayoutParams(params);
+         TextView text = new TextView(this.getContext());
+         text.setId(View.generateViewId());
+-        text.setText(s);
++        text.setText(track.getName());
+         ImageButton img = new ImageButton(this.getContext());
+         params.setMargins(10, 10, 10, 0);
+         img.setBackgroundResource(R.drawable.cavalcade);
+@@ -86,7 +89,7 @@
+         params.setMargins(190, 50, 10, 10);
+         TextView t = new TextView(this.getContext());
+         //TODO AGGIUNGERE NOME AUTORE E FOTO DELL'ALBUM GIUSTA
+-        t.setText("Author:");
++        t.setText("Author:" + track.getArtist().getName());
+         t.setLayoutParams(params);
+         newTrack.addView(t);
+         linearLayoutRecents.addView(newTrack);
+@@ -104,10 +107,8 @@
+         }
+ 
+         newTrack.setOnClickListener(v -> {
+-                    Intent activity = new Intent(v.getContext(), LyricsPage.class);
+-                    activity.putExtra("track_id", id);
+-                    startActivity(activity);
+-                });
++        });
++
+         linearLayoutRecents.addView(newTrack);
+     }
+ 
+Index: app/src/main/java/com/group5/lyrics/SearchList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group5.lyrics;\r\n\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.ComponentName;\r\nimport android.content.Intent;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.graphics.Typeface;\r\nimport android.graphics.drawable.GradientDrawable;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\n\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.Menu;\r\nimport android.view.MenuInflater;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.AbsListView;\r\nimport android.widget.GridLayout;\r\nimport android.widget.ImageButton;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.SearchView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.group5.lyrics.api.Api;\r\nimport com.group5.lyrics.api.VolleyResponseListenerImageUrl;\r\nimport com.group5.lyrics.api.VolleyResponseListenerLyrics;\r\nimport com.group5.lyrics.api.VolleyResponseListenerSong;\r\nimport com.group5.lyrics.db.DatabaseHelper;\r\nimport com.group5.lyrics.db.Loader;\r\nimport com.group5.lyrics.db.LoaderInterface;\r\nimport com.group5.lyrics.models.song.LyricsInterface;\r\nimport com.group5.lyrics.models.song.Track;\r\nimport com.group5.lyrics.models.song.TrackInterface;\r\n\r\nimport org.json.JSONException;\r\n\r\nimport java.util.List;\r\n\r\npublic class SearchList extends Fragment {\r\n    String query;\r\n    DatabaseHelper dbHelper;\r\n    SQLiteDatabase db;\r\n\r\n    public SearchList(String query) {\r\n        this.query = query;\r\n    }\r\n\r\n    @SuppressLint(\"ResourceType\")\r\n    public View onCreateView(@NonNull LayoutInflater inflater,\r\n                             ViewGroup container, Bundle savedInstanceState) {\r\n\r\n        View root = inflater.inflate(R.layout.activity_searchlist, container, false);\r\n        dbHelper = new DatabaseHelper(getContext());\r\n        db = dbHelper.getWritableDatabase();\r\n        LoaderInterface loader = new Loader(dbHelper);\r\n        displayAllTracks(root, loader);\r\n        return root;\r\n    }\r\n\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    void displayAllTracks(View root, LoaderInterface loader) {\r\n\r\n        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(\r\n                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);\r\n        LinearLayout linearLayout = root.findViewById(R.id.Allsong);\r\n\r\n        Api api = new Api(getContext());\r\n        api.searchBySongName(query, new VolleyResponseListenerSong() {\r\n            @Override\r\n            public void onResponse(List<TrackInterface> songs) {\r\n                for (int i = 1; i < songs.size(); i++) {\r\n                    createAndDisplayTracks(params, linearLayout, songs.get(i));\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onError(String message) {\r\n                Log.d(\"ERRORS: \", message);\r\n            }\r\n        });\r\n    }\r\n\r\n    private void createAndDisplayTracks(RelativeLayout.LayoutParams params, LinearLayout LayoutSongs, TrackInterface track) {\r\n        Log.d(\"QUERIED SONGS : \", track.getName());\r\n        RelativeLayout newTrack = new RelativeLayout(this.getContext());\r\n        newTrack.setLayoutParams(params);\r\n        TextView text = new TextView(this.getContext());\r\n        text.setId(View.generateViewId());\r\n        text.setText(track.getName());\r\n        ImageButton img = new ImageButton(this.getContext());\r\n        params.setMargins(10, 10, 10, 0);\r\n        img.setBackgroundResource(R.drawable.cavalcade);\r\n        img.setLayoutParams(params);\r\n        img.setLayoutParams(new AbsListView.LayoutParams(190, 180));\r\n        params = new RelativeLayout.LayoutParams(1000, 60);\r\n        params.setMargins(190, 10, 10, 10);\r\n        newTrack.addView(img);\r\n        text.setLayoutParams(params);\r\n        text.setTypeface(null, Typeface.BOLD_ITALIC);\r\n        newTrack.addView(text);\r\n        params = new RelativeLayout.LayoutParams(1000, 60);\r\n        params.setMargins(190, 50, 10, 10);\r\n        TextView tAuthor = new TextView(this.getContext());\r\n        //TODO add right album picture\r\n        tAuthor.setText(\"Author:\" + track.getAlbum().getName());\r\n        tAuthor.setLayoutParams(params);\r\n        newTrack.addView(tAuthor);\r\n        LayoutSongs.addView(newTrack);\r\n        //per il bordo alla textview\r\n        GradientDrawable border = new GradientDrawable();\r\n        border.setStroke(2, 0xFF000000); //black border with full opacity\r\n        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {\r\n            newTrack.setBackgroundDrawable(border);\r\n        } else {\r\n            newTrack.setBackground(border);\r\n        }\r\n\r\n        if (newTrack.getParent() != null) {\r\n            ((ViewGroup) newTrack.getParent()).removeView(newTrack);\r\n        }\r\n\r\n        newTrack.setOnClickListener(v -> {\r\n            Api api = new Api(getContext());\r\n            api.getLyricsFromSongId(track.getId(), new VolleyResponseListenerLyrics() {\r\n                @Override\r\n                public void onResponse(LyricsInterface lyrics) throws JSONException {\r\n                    track.setLyrics(lyrics);\r\n                    dbHelper.addTrack(db, track);\r\n                    Intent activity = new Intent(v.getContext(), LyricsPage.class);\r\n                    activity.putExtra(\"track_id\", track.getId());\r\n                    startActivity(activity);\r\n                }\r\n\r\n                @Override\r\n                public void onError(String message) {\r\n                    Toast.makeText(getContext(), \"ERROR WHILE SEARCHING ITS LYRICS\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            });\r\n\r\n\r\n        });\r\n\r\n        LayoutSongs.addView(newTrack);\r\n\r\n\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group5/lyrics/SearchList.java b/app/src/main/java/com/group5/lyrics/SearchList.java
+--- a/app/src/main/java/com/group5/lyrics/SearchList.java	(revision ca6923ec8a0ce4cf30d04b7d74def6e4bb76e453)
++++ b/app/src/main/java/com/group5/lyrics/SearchList.java	(date 1641476005973)
+@@ -18,6 +18,7 @@
+ import android.view.View;
+ import android.view.ViewGroup;
+ import android.widget.AbsListView;
++import android.widget.FrameLayout;
+ import android.widget.GridLayout;
+ import android.widget.ImageButton;
+ import android.widget.LinearLayout;
+@@ -28,6 +29,8 @@
+ 
+ import androidx.annotation.NonNull;
+ import androidx.fragment.app.Fragment;
++import androidx.fragment.app.FragmentManager;
++import androidx.fragment.app.FragmentTransaction;
+ 
+ import com.group5.lyrics.api.Api;
+ import com.group5.lyrics.api.VolleyResponseListenerImageUrl;
+@@ -39,6 +42,7 @@
+ import com.group5.lyrics.models.song.LyricsInterface;
+ import com.group5.lyrics.models.song.Track;
+ import com.group5.lyrics.models.song.TrackInterface;
++import com.group5.lyrics.ui.home.HomeFragment;
+ 
+ import org.json.JSONException;
+ 
+@@ -48,6 +52,7 @@
+     String query;
+     DatabaseHelper dbHelper;
+     SQLiteDatabase db;
++    View root;
+ 
+     public SearchList(String query) {
+         this.query = query;
+@@ -57,7 +62,7 @@
+     public View onCreateView(@NonNull LayoutInflater inflater,
+                              ViewGroup container, Bundle savedInstanceState) {
+ 
+-        View root = inflater.inflate(R.layout.activity_searchlist, container, false);
++        root = inflater.inflate(R.layout.activity_searchlist, container, false);
+         dbHelper = new DatabaseHelper(getContext());
+         db = dbHelper.getWritableDatabase();
+         LoaderInterface loader = new Loader(dbHelper);
+@@ -113,7 +118,7 @@
+         params.setMargins(190, 50, 10, 10);
+         TextView tAuthor = new TextView(this.getContext());
+         //TODO add right album picture
+-        tAuthor.setText("Author:" + track.getAlbum().getName());
++        tAuthor.setText("Author:" + track.getArtist().getName());
+         tAuthor.setLayoutParams(params);
+         newTrack.addView(tAuthor);
+         LayoutSongs.addView(newTrack);
+@@ -137,10 +142,9 @@
+                 public void onResponse(LyricsInterface lyrics) throws JSONException {
+                     track.setLyrics(lyrics);
+                     dbHelper.addTrack(db, track);
+-                    Intent activity = new Intent(v.getContext(), LyricsPage.class);
+-                    activity.putExtra("track_id", track.getId());
+-                    startActivity(activity);
++
+                 }
++
+ 
+                 @Override
+                 public void onError(String message) {
+Index: app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group5.lyrics.ui.home;\r\n\r\nimport android.content.ComponentName;\r\nimport android.content.Intent;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.os.Bundle;\r\nimport android.provider.Settings;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.Menu;\r\nimport android.view.MenuInflater;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.AbsListView;\r\nimport android.widget.FrameLayout;\r\nimport android.widget.ImageButton;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.SearchView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.fragment.app.FragmentManager;\r\nimport androidx.fragment.app.FragmentTransaction;\r\n\r\nimport com.group5.lyrics.Favourites;\r\nimport com.group5.lyrics.LyricsPage;\r\nimport com.group5.lyrics.MainActivity;\r\nimport com.group5.lyrics.R;\r\nimport com.group5.lyrics.Recents;\r\nimport com.group5.lyrics.SearchList;\r\nimport com.group5.lyrics.api.Api;\r\nimport com.group5.lyrics.api.VolleyResponseListenerLyrics;\r\nimport com.group5.lyrics.api.VolleyResponseListenerSong;\r\nimport com.group5.lyrics.databinding.FragmentHomeBinding;\r\nimport com.group5.lyrics.db.DatabaseHelper;\r\nimport com.group5.lyrics.db.Loader;\r\nimport com.group5.lyrics.db.LoaderInterface;\r\nimport com.group5.lyrics.models.song.LyricsInterface;\r\nimport com.group5.lyrics.models.song.TrackInterface;\r\nimport com.group5.lyrics.models.user.UserSettingsInterface;\r\nimport com.group5.lyrics.utilities.TrackListening;\r\n\r\nimport java.util.List;\r\n\r\npublic class HomeFragment extends Fragment {\r\n\r\n    private FragmentHomeBinding binding;\r\n    private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = \"android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS\";\r\n    String query;\r\n    View root;\r\n    int id;\r\n    UserSettingsInterface userSettings;\r\n\r\n    /**\r\n     * This view is called every time we tap the button Home in the bottom left\r\n     *\r\n     * @param inflater\r\n     * @param container\r\n     * @param savedInstanceState\r\n     * @return\r\n     */\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\r\n        binding = FragmentHomeBinding.inflate(inflater, container, false);\r\n        root = binding.getRoot();\r\n        TextView track_listening = root.findViewById(R.id.nowPlayingText);\r\n        track_listening.setText(TrackListening.TRACK_INFORMATION);\r\n        setHasOptionsMenu(true);\r\n\r\n        DatabaseHelper dbHelper = new DatabaseHelper(this.getContext());\r\n        SQLiteDatabase db = dbHelper.getWritableDatabase();\r\n        userSettings = dbHelper.getUserSettings(db);\r\n        LoaderInterface loader = new Loader(dbHelper);\r\n        displayAllHomeTracks(root, loader);\r\n        track_listening.setText(TrackListening.isSongDetected(false));\r\n\r\n        ImageButton fab = binding.reloadButton;\r\n        fab.setOnClickListener(view -> {\r\n            if (isNotificationServiceEnabled()) {\r\n\r\n                if (TrackListening.IS_CHANGED && !TrackListening.TRACK_COUNTER.equals(TrackListening.TRACK_FOUND)) {\r\n                    Api api = new Api(getContext());\r\n                    api.searchBySongName(TrackListening.TRACK_FOUND, new VolleyResponseListenerSong() {\r\n                        @Override\r\n                        public void onResponse(List<TrackInterface> songs) {\r\n                            if (songs.isEmpty()) {\r\n                                TrackListening.TRACK_INFORMATION = \"No Lyrics Found for: \" + TrackListening.TRACK_FOUND;\r\n                                track_listening.setOnClickListener(v -> {\r\n                                });\r\n                            } else {\r\n                                TrackListening.TRACK_COUNTER = TrackListening.TRACK_FOUND;\r\n                                TrackListening.TRACK_INFORMATION = songs.get(0).getName() + \"\\t\\n\" + songs.get(0).getArtist().getName() + \"\\t\" + songs.get(0).getAlbum().getName() + \"\\t\";\r\n\r\n                                track_listening.setOnClickListener(v -> {\r\n                                    Api api = new Api(getContext());\r\n                                    api.getLyricsFromSongId(songs.get(0).getId(), new VolleyResponseListenerLyrics() {\r\n                                        @Override\r\n                                        public void onResponse(LyricsInterface lyrics) {\r\n                                            songs.get(0).setLyrics(lyrics);\r\n                                            dbHelper.addTrack(db, songs.get(0));\r\n                                            Intent activity = new Intent(v.getContext(), LyricsPage.class);\r\n                                            activity.putExtra(\"track_id\", songs.get(0).getId());\r\n                                            startActivity(activity);\r\n                                        }\r\n\r\n                                        @Override\r\n                                        public void onError(String message) {\r\n                                            Toast.makeText(getContext(), \"Impossible to reach the APIs server...\", Toast.LENGTH_SHORT).show();\r\n                                        }\r\n                                    });\r\n\r\n                                });\r\n                            }\r\n                            track_listening.setText(TrackListening.TRACK_INFORMATION);\r\n                        }\r\n\r\n                        @Override\r\n                        public void onError(String message) {\r\n                            Toast.makeText(getContext(), \"Error querying the APIs\", Toast.LENGTH_SHORT).show();\r\n                            Log.e(\"QUERY API ERROR:\", message);\r\n                        }\r\n                    });\r\n                } else if (TrackListening.IS_CHANGED && TrackListening.TRACK_COUNTER.equals(TrackListening.TRACK_FOUND))\r\n                    return;\r\n                else\r\n                    track_listening.setText(\"Start to listen to a song for seeing lyrics...\");\r\n\r\n\r\n            } else\r\n                track_listening.setText(\"Please Enable Notification Access\");\r\n        });\r\n\r\n        LinearLayout brecents = root.findViewById(R.id.RecentButton);\r\n        brecents.setOnClickListener(v -> {\r\n            recentList(this);\r\n        });\r\n\r\n        LinearLayout bfavourite = root.findViewById(R.id.FavoritesButton);\r\n        bfavourite.setOnClickListener(v -> {\r\n            favouritesList(this);\r\n        });\r\n\r\n        return root;\r\n    }\r\n\r\n    @Override\r\n\r\n    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {\r\n        // SEARCH BAR TODO REDO ALL\r\n        super.onCreateOptionsMenu(menu, inflater);\r\n        inflater.inflate(R.menu.menu, menu);\r\n        MenuItem item = menu.findItem(R.id.action_search);\r\n        SearchView searchView = new SearchView(((MainActivity) getContext()).getSupportActionBar().getThemedContext());\r\n        searchView.setQueryHint(\"Search\");\r\n        item.setActionView(searchView);\r\n        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {\r\n\r\n            @Override\r\n            public boolean onQueryTextSubmit(String q) {\r\n                query = q;\r\n                SearchList s = new SearchList(query);\r\n                searchList(HomeFragment.this);\r\n                return false;\r\n            }\r\n\r\n            //TODO implement search on every time you type\r\n            @Override\r\n            public boolean onQueryTextChange(String newText) {\r\n                return false;\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n    @Override\r\n    public void onDestroyView() {\r\n        super.onDestroyView();\r\n        binding = null;\r\n    }\r\n\r\n    void displayAllHomeTracks(View root, LoaderInterface loader) {\r\n        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);\r\n        LinearLayout linearLayoutRecents = root.findViewById(R.id.recentAll);\r\n        LinearLayout linearLayoutFavourites = root.findViewById(R.id.favoritesAll);\r\n\r\n        if (loader.getAllRecentsTracks().isEmpty()) {\r\n            createGridTrackAndDisplay(params, linearLayoutRecents, \"NO RECENT TRACKS\");\r\n        } else {\r\n            for (int i = 0; i < loader.getAllRecentsTracks().size(); i++) {\r\n                if (i <= userSettings.getMaxRecentToSave() - 1)\r\n                    createGridTrackAndDisplay(params, linearLayoutRecents, loader.getAllRecentsTracks().get(i).getName(), loader.getAllRecentsTracks().get(i).getId());\r\n            }\r\n        }\r\n\r\n        if (loader.getAllFavouritesTracks().isEmpty()) {\r\n            createGridTrackAndDisplay(params, linearLayoutFavourites, \"NOT FAVOURITES TRACKS\");\r\n        } else {\r\n            for (int i = 0; i < loader.getAllFavouritesTracks().size(); i++) {\r\n                createGridTrackAndDisplay(params, linearLayoutFavourites, loader.getAllFavouritesTracks().get(i).getName(), loader.getAllFavouritesTracks().get(i).getId());\r\n            }\r\n        }\r\n    }\r\n\r\n    private void createGridTrackAndDisplay(RelativeLayout.LayoutParams params, LinearLayout linearLayoutRecents, String s) {\r\n        RelativeLayout newTrack = new RelativeLayout(this.getContext());\r\n        newTrack.setLayoutParams(params);\r\n        TextView text = new TextView(this.getContext());\r\n        text.setId(View.generateViewId());\r\n        text.setText(s);\r\n        linearLayoutRecents.addView(newTrack);\r\n    }\r\n\r\n    private void createGridTrackAndDisplay(RelativeLayout.LayoutParams params, LinearLayout linearLayoutRecents, String s, int ident) {\r\n\r\n        RelativeLayout newTrack = new RelativeLayout(this.getContext());\r\n        newTrack.setLayoutParams(params);\r\n        TextView text = new TextView(this.getContext());\r\n        text.setId(View.generateViewId());\r\n        text.setText(s);\r\n        ImageButton img = new ImageButton(this.getContext());\r\n        params.setMargins(10, 10, 10, 10);\r\n        img.setBackgroundResource(R.drawable.cavalcade);\r\n        img.setLayoutParams(params);\r\n        img.setLayoutParams(new AbsListView.LayoutParams(260, 260));\r\n        params = new RelativeLayout.LayoutParams(260, 260);\r\n        params.setMargins(0, 260, 10, 10);\r\n        text.setLayoutParams(params);\r\n        newTrack.addView(text);\r\n        newTrack.addView(img);\r\n\r\n        img.setOnClickListener(v -> {\r\n            id = ident;\r\n            lyricsPagef(this);\r\n        });\r\n        linearLayoutRecents.addView(newTrack);\r\n    }\r\n\r\n    private boolean isNotificationServiceEnabled() {\r\n        final String allNames = Settings.Secure.getString(getContext().getContentResolver(), \"enabled_notification_listeners\");\r\n        if (allNames != null && !allNames.isEmpty()) {\r\n            for (String name : allNames.split(\":\")) {\r\n                if (getContext().getPackageName().equals(ComponentName.unflattenFromString(name).getPackageName())) {\r\n                    return true;\r\n                }\r\n            }\r\n        }\r\n        startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));\r\n        return false;\r\n    }\r\n\r\n    public void recentList(Fragment someFragment) {\r\n        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();\r\n        transaction.replace(R.id.homePage, new Recents());\r\n        transaction.addToBackStack(null);\r\n        transaction.commit();\r\n    }\r\n\r\n    public void searchList(Fragment someFragment) {\r\n        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();\r\n        transaction.replace(R.id.homePage, new SearchList(query));\r\n        transaction.addToBackStack(null);\r\n        transaction.commit();\r\n    }\r\n\r\n    public void favouritesList(Fragment someFragment) {\r\n        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();\r\n        transaction.replace(R.id.homePage, new Favourites());\r\n        transaction.addToBackStack(null);\r\n        transaction.commit();\r\n    }\r\n\r\n    public void lyricsPagef(Fragment someFragment) {\r\n        FrameLayout fl = root.findViewById(R.id.homePage);\r\n        fl.removeAllViews();\r\n        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();\r\n        FragmentTransaction transaction = fragmentManager.beginTransaction();\r\n        transaction.replace(R.id.homePage, new LyricsPage(id));\r\n        transaction.addToBackStack(null);\r\n        transaction.commit();\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java b/app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java
+--- a/app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java	(revision ca6923ec8a0ce4cf30d04b7d74def6e4bb76e453)
++++ b/app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java	(date 1641475866559)
+@@ -47,12 +47,17 @@
+ import java.util.List;
+ 
+ public class HomeFragment extends Fragment {
++    int id;
++
++  /*  public HomeFragment(int id) {
++        this.id = id;
++    }*/
+ 
+     private FragmentHomeBinding binding;
+     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
+     String query;
+     View root;
+-    int id;
++
+     UserSettingsInterface userSettings;
+ 
+     /**
+Index: app/src/main/java/com/group5/lyrics/Favourites.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group5.lyrics;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.graphics.Typeface;\r\nimport android.graphics.drawable.GradientDrawable;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.AbsListView;\r\nimport android.widget.ImageButton;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.group5.lyrics.db.DatabaseHelper;\r\nimport com.group5.lyrics.db.Loader;\r\nimport com.group5.lyrics.db.LoaderInterface;\r\n\r\npublic class Favourites extends Fragment {\r\n\r\n    @SuppressLint(\"ResourceType\")\r\n    public View onCreateView(@NonNull LayoutInflater inflater,\r\n                             ViewGroup container, Bundle savedInstanceState) {\r\n\r\n        View root = inflater.inflate(R.layout.activity_favourites, container, false);\r\n        DatabaseHelper dbHelper = new DatabaseHelper(getContext());\r\n        SQLiteDatabase db = dbHelper.getWritableDatabase();\r\n        //dbHelper.addTrack(db, TestTrack.getTestTrack());\r\n        LoaderInterface loader = new Loader(dbHelper);\r\n        displayAllFavourites(root, loader);\r\n        return root;\r\n    }\r\n\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    void displayAllFavourites(View root, LoaderInterface loader) {\r\n\r\n        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(\r\n                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);\r\n        LinearLayout linearLayoutFavourites = root.findViewById(R.id.favouritesAll);\r\n\r\n        if (loader.getAllFavouritesTracks().isEmpty()) {\r\n        } else {\r\n            for (int i = 0; i < loader.getAllFavouritesTracks().size(); i++) {\r\n                createGridTrackAndDisplayFavourites(params, linearLayoutFavourites, loader.getAllFavouritesTracks().get(i).getName(), loader.getAllFavouritesTracks().get(i).getId());\r\n\r\n            }\r\n        }\r\n\r\n    }\r\n\r\n    private void createGridTrackAndDisplayFavourites(RelativeLayout.LayoutParams params, LinearLayout linearLayoutFavourites, String s, int id) {\r\n        RelativeLayout newTrack = new RelativeLayout(this.getContext());\r\n        newTrack.setLayoutParams(params);\r\n        TextView text = new TextView(this.getContext());\r\n        text.setId(View.generateViewId());\r\n        text.setText(s);\r\n        ImageButton img = new ImageButton(this.getContext());\r\n        params.setMargins(10, 10, 10, 0);\r\n        img.setBackgroundResource(R.drawable.cavalcade);\r\n        img.setLayoutParams(params);\r\n        img.setLayoutParams(new AbsListView.LayoutParams(190, 180));\r\n        params = new RelativeLayout.LayoutParams(1000, 60);\r\n        params.setMargins(190, 10, 10, 10);\r\n        newTrack.addView(img);\r\n        text.setLayoutParams(params);\r\n        text.setTypeface(null, Typeface.BOLD_ITALIC);\r\n        newTrack.addView(text);\r\n        params = new RelativeLayout.LayoutParams(1000, 60);\r\n        params.setMargins(190, 50, 10, 10);\r\n        TextView t = new TextView(this.getContext());\r\n        //TODO AGGIUNGERE NOME AUTORE E FOTO DELL'ALBUM GIUSTA\r\n        t.setText(\"Author:\");\r\n        t.setLayoutParams(params);\r\n        newTrack.addView(t);\r\n        linearLayoutFavourites.addView(newTrack);\r\n        //per il bordo alla textview\r\n        GradientDrawable border = new GradientDrawable();\r\n        border.setStroke(2, 0xFF000000); //black border with full opacity\r\n        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {\r\n            newTrack.setBackgroundDrawable(border);\r\n        } else {\r\n            newTrack.setBackground(border);\r\n        }\r\n\r\n        if (newTrack.getParent() != null) {\r\n            ((ViewGroup) newTrack.getParent()).removeView(newTrack);\r\n        }\r\n\r\n        linearLayoutFavourites.addView(newTrack);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group5/lyrics/Favourites.java b/app/src/main/java/com/group5/lyrics/Favourites.java
+--- a/app/src/main/java/com/group5/lyrics/Favourites.java	(revision ca6923ec8a0ce4cf30d04b7d74def6e4bb76e453)
++++ b/app/src/main/java/com/group5/lyrics/Favourites.java	(date 1641476006013)
+@@ -1,6 +1,7 @@
+ package com.group5.lyrics;
+ 
+ import android.annotation.SuppressLint;
++import android.content.Intent;
+ import android.database.sqlite.SQLiteDatabase;
+ import android.graphics.Typeface;
+ import android.graphics.drawable.GradientDrawable;
+@@ -11,6 +12,7 @@
+ import android.view.View;
+ import android.view.ViewGroup;
+ import android.widget.AbsListView;
++import android.widget.FrameLayout;
+ import android.widget.ImageButton;
+ import android.widget.LinearLayout;
+ import android.widget.RelativeLayout;
+@@ -18,18 +20,22 @@
+ 
+ import androidx.annotation.NonNull;
+ import androidx.fragment.app.Fragment;
++import androidx.fragment.app.FragmentManager;
++import androidx.fragment.app.FragmentTransaction;
+ 
+ import com.group5.lyrics.db.DatabaseHelper;
+ import com.group5.lyrics.db.Loader;
+ import com.group5.lyrics.db.LoaderInterface;
++import com.group5.lyrics.models.song.TrackInterface;
+ 
+ public class Favourites extends Fragment {
++    View root;
+ 
+     @SuppressLint("ResourceType")
+     public View onCreateView(@NonNull LayoutInflater inflater,
+                              ViewGroup container, Bundle savedInstanceState) {
+ 
+-        View root = inflater.inflate(R.layout.activity_favourites, container, false);
++        root = inflater.inflate(R.layout.activity_favourites, container, false);
+         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+         SQLiteDatabase db = dbHelper.getWritableDatabase();
+         //dbHelper.addTrack(db, TestTrack.getTestTrack());
+@@ -51,19 +57,19 @@
+         if (loader.getAllFavouritesTracks().isEmpty()) {
+         } else {
+             for (int i = 0; i < loader.getAllFavouritesTracks().size(); i++) {
+-                createGridTrackAndDisplayFavourites(params, linearLayoutFavourites, loader.getAllFavouritesTracks().get(i).getName(), loader.getAllFavouritesTracks().get(i).getId());
++                createGridTrackAndDisplayFavourites(params, linearLayoutFavourites, loader.getAllFavouritesTracks().get(i));
+ 
+             }
+         }
+ 
+     }
+ 
+-    private void createGridTrackAndDisplayFavourites(RelativeLayout.LayoutParams params, LinearLayout linearLayoutFavourites, String s, int id) {
++    private void createGridTrackAndDisplayFavourites(RelativeLayout.LayoutParams params, LinearLayout linearLayoutFavourites, TrackInterface track) {
+         RelativeLayout newTrack = new RelativeLayout(this.getContext());
+         newTrack.setLayoutParams(params);
+         TextView text = new TextView(this.getContext());
+         text.setId(View.generateViewId());
+-        text.setText(s);
++        text.setText(track.getName());
+         ImageButton img = new ImageButton(this.getContext());
+         params.setMargins(10, 10, 10, 0);
+         img.setBackgroundResource(R.drawable.cavalcade);
+@@ -79,7 +85,7 @@
+         params.setMargins(190, 50, 10, 10);
+         TextView t = new TextView(this.getContext());
+         //TODO AGGIUNGERE NOME AUTORE E FOTO DELL'ALBUM GIUSTA
+-        t.setText("Author:");
++        t.setText("Author:" + track.getArtist().getName());
+         t.setLayoutParams(params);
+         newTrack.addView(t);
+         linearLayoutFavourites.addView(newTrack);
+@@ -95,7 +101,8 @@
+         if (newTrack.getParent() != null) {
+             ((ViewGroup) newTrack.getParent()).removeView(newTrack);
+         }
+-
++        newTrack.setOnClickListener(v -> {
++        });
+         linearLayoutFavourites.addView(newTrack);
+     }
+ 
+Index: app/src/main/res/layout/activity_favourites.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".ui.home.HomeFragment\">\r\n\r\n\r\n    <FrameLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n\r\n        <androidx.cardview.widget.CardView\r\n            android:id=\"@+id/favourites\"\r\n            android:layout_width=\"390dp\"\r\n            android:layout_height=\"699dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginStart=\"10dp\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:layout_marginEnd=\"10dp\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            app:cardCornerRadius=\"6dp\">\r\n\r\n\r\n            <ScrollView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\">\r\n\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/favouritesAll\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"vertical\" />\r\n\r\n            </ScrollView>\r\n\r\n        </androidx.cardview.widget.CardView>\r\n\r\n    </FrameLayout>\r\n\r\n</ScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_favourites.xml b/app/src/main/res/layout/activity_favourites.xml
+--- a/app/src/main/res/layout/activity_favourites.xml	(revision ca6923ec8a0ce4cf30d04b7d74def6e4bb76e453)
++++ b/app/src/main/res/layout/activity_favourites.xml	(date 1641475383490)
+@@ -10,8 +10,10 @@
+ 
+ 
+     <FrameLayout
++        android:id="@+id/favouritesFragment"
+         android:layout_width="match_parent"
+-        android:layout_height="match_parent">
++        android:layout_height="wrap_content"
++        android:orientation="vertical">
+ 
+ 
+         <androidx.cardview.widget.CardView
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_lyrics_page.xml\" value=\"0.21614583333333334\" />\r\n        <entry key=\"..\\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable-v24/ic_launcher_foreground.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/background_splashscreen.xml\" value=\"0.14957264957264957\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_launcher_background.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_notifications_black_24dp.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_lyrics_page.xml\" value=\"0.15042735042735042\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml\" value=\"0.152\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_scrolling.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_scrolling.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_first.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.12\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml\" value=\"0.1539855072463768\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_second.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/test_track.xml\" value=\"0.20512820512820512\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_account_circle_24.xml\" value=\"0.17962962962962964\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.17962962962962964\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_scrolling.xml\" value=\"0.22554347826086957\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml\" value=\"0.22554347826086957\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml\" value=\"0.259375\" />\r\n        <entry key=\"app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.259375\" />\r\n        <entry key=\"app/src/main/res/layout/activity_main.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/activity_recents.xml\" value=\"0.12291666666666666\" />\r\n        <entry key=\"app/src/main/res/layout/content_recents.xml\" value=\"0.12291666666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_first.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_home.xml\" value=\"0.335\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_notifications.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_second.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/grid_item.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/login.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/menu/items.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/menu/menu.xml\" value=\"0.24322916666666666\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"11\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision ca6923ec8a0ce4cf30d04b7d74def6e4bb76e453)
++++ b/.idea/misc.xml	(date 1641467612472)
+@@ -4,6 +4,7 @@
+     <option name="filePathToZoomLevelMap">
+       <map>
+         <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_lyrics_page.xml" value="0.21614583333333334" />
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_searchlist.xml" value="0.10925925925925926" />
+         <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml" value="0.264" />
+         <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+         <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21837606837606838" />

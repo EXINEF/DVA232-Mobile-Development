@@ -1,0 +1,271 @@
+Index: app/src/main/res/layout/activity_lyrics_page.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:fitsSystemWindows=\"true\"\r\n    tools:context=\".LyricsPage\">\r\n\r\n    <com.google.android.material.appbar.AppBarLayout\r\n        android:id=\"@+id/app_bar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"200dp\"\r\n        android:fitsSystemWindows=\"true\"\r\n        android:theme=\"@style/Theme.LyricsEverywhere.AppBarOverlay\">\r\n\r\n\r\n        <com.google.android.material.appbar.CollapsingToolbarLayout\r\n            android:id=\"@+id/toolbar_layout\"\r\n            style=\"@style/Widget.MaterialComponents.Toolbar.Primary\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:fitsSystemWindows=\"true\"\r\n            app:contentScrim=\"?attr/colorPrimary\"\r\n            app:layout_scrollFlags=\"scroll|exitUntilCollapsed\"\r\n            app:toolbarId=\"@+id/toolbar\"\r\n            app:title=\"Slow\"\r\n            >\r\n\r\n\r\n            <ImageView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:src=\"@drawable/cavalcade\"\r\n                android:scaleType=\"centerCrop\"\r\n\r\n                />\r\n\r\n            <androidx.appcompat.widget.Toolbar\r\n                android:id=\"@+id/toolbar\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"?attr/actionBarSize\"\r\n                app:layout_collapseMode=\"pin\"\r\n                app:theme=\"@style/ToolbarTheme\"\r\n                />\r\n\r\n        </com.google.android.material.appbar.CollapsingToolbarLayout>\r\n    </com.google.android.material.appbar.AppBarLayout>\r\n\r\n    <include layout=\"@layout/content_scrolling\"\r\n        />\r\n\r\n    <com.google.android.material.floatingactionbutton.FloatingActionButton\r\n        android:id=\"@+id/fab\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginEnd=\"@dimen/fab_margin\"\r\n        app:layout_anchor=\"@id/app_bar\"\r\n        app:layout_anchorGravity=\"bottom|end\"\r\n        app:srcCompat=\"@drawable/ic_baseline_favorite_24\" />\r\n\r\n</androidx.coordinatorlayout.widget.CoordinatorLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_lyrics_page.xml b/app/src/main/res/layout/activity_lyrics_page.xml
+--- a/app/src/main/res/layout/activity_lyrics_page.xml	(revision eaedf8a33ddc194e9825deba64b63f50652b139d)
++++ b/app/src/main/res/layout/activity_lyrics_page.xml	(date 1641464007728)
+@@ -1,11 +1,23 @@
+ <?xml version="1.0" encoding="utf-8"?>
++<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical"
++    tools:context=".ui.home.HomeFragment">
++<FrameLayout
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++
+ <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:fitsSystemWindows="true"
+-    tools:context=".LyricsPage">
++    tools:context=".ui.home.HomeFragment">
++
+ 
+     <com.google.android.material.appbar.AppBarLayout
+         android:id="@+id/app_bar"
+@@ -59,4 +71,6 @@
+         app:layout_anchorGravity="bottom|end"
+         app:srcCompat="@drawable/ic_baseline_favorite_24" />
+ 
+-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+\ No newline at end of file
++</androidx.coordinatorlayout.widget.CoordinatorLayout>
++</FrameLayout>
++</ScrollView>
+Index: app/src/main/java/com/group5/lyrics/SearchList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group5.lyrics;\r\n\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.ComponentName;\r\nimport android.content.Intent;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.graphics.Typeface;\r\nimport android.graphics.drawable.GradientDrawable;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\n\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.Menu;\r\nimport android.view.MenuInflater;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.AbsListView;\r\nimport android.widget.GridLayout;\r\nimport android.widget.ImageButton;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.SearchView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.group5.lyrics.api.Api;\r\nimport com.group5.lyrics.api.VolleyResponseListenerImageUrl;\r\nimport com.group5.lyrics.api.VolleyResponseListenerLyrics;\r\nimport com.group5.lyrics.api.VolleyResponseListenerSong;\r\nimport com.group5.lyrics.db.DatabaseHelper;\r\nimport com.group5.lyrics.db.Loader;\r\nimport com.group5.lyrics.db.LoaderInterface;\r\nimport com.group5.lyrics.models.song.LyricsInterface;\r\nimport com.group5.lyrics.models.song.Track;\r\nimport com.group5.lyrics.models.song.TrackInterface;\r\n\r\nimport org.json.JSONException;\r\n\r\nimport java.util.List;\r\n\r\npublic class SearchList extends Fragment {\r\n    String query;\r\n    DatabaseHelper dbHelper;\r\n    SQLiteDatabase db;\r\n\r\n    public SearchList(String query) {\r\n        this.query = query;\r\n    }\r\n\r\n    @SuppressLint(\"ResourceType\")\r\n    public View onCreateView(@NonNull LayoutInflater inflater,\r\n                             ViewGroup container, Bundle savedInstanceState) {\r\n\r\n        View root = inflater.inflate(R.layout.activity_searchlist, container, false);\r\n        dbHelper = new DatabaseHelper(getContext());\r\n        db = dbHelper.getWritableDatabase();\r\n        LoaderInterface loader = new Loader(dbHelper);\r\n        displayAllTracks(root, loader);\r\n        return root;\r\n    }\r\n\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    void displayAllTracks(View root, LoaderInterface loader) {\r\n\r\n        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(\r\n                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);\r\n        LinearLayout linearLayout = root.findViewById(R.id.Allsong);\r\n\r\n        Api api = new Api(getContext());\r\n        api.searchBySongName(query, new VolleyResponseListenerSong() {\r\n            @Override\r\n            public void onResponse(List<TrackInterface> songs) {\r\n                for (int i = 1; i < songs.size(); i++) {\r\n                    createAndDisplayTracks(params, linearLayout, songs.get(i));\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onError(String message) {\r\n                Log.d(\"ERRORS: \", message);\r\n            }\r\n        });\r\n    }\r\n\r\n    private void createAndDisplayTracks(RelativeLayout.LayoutParams params, LinearLayout LayoutSongs, TrackInterface track) {\r\n        Log.d(\"QUERIED SONGS : \", track.getName());\r\n        RelativeLayout newTrack = new RelativeLayout(this.getContext());\r\n        newTrack.setLayoutParams(params);\r\n        TextView text = new TextView(this.getContext());\r\n        text.setId(View.generateViewId());\r\n        text.setText(track.getName());\r\n        ImageButton img = new ImageButton(this.getContext());\r\n        params.setMargins(10, 10, 10, 0);\r\n        img.setBackgroundResource(R.drawable.cavalcade);\r\n        img.setLayoutParams(params);\r\n        img.setLayoutParams(new AbsListView.LayoutParams(190, 180));\r\n        params = new RelativeLayout.LayoutParams(1000, 60);\r\n        params.setMargins(190, 10, 10, 10);\r\n        newTrack.addView(img);\r\n        text.setLayoutParams(params);\r\n        text.setTypeface(null, Typeface.BOLD_ITALIC);\r\n        newTrack.addView(text);\r\n        params = new RelativeLayout.LayoutParams(1000, 60);\r\n        params.setMargins(190, 50, 10, 10);\r\n        TextView t = new TextView(this.getContext());\r\n        //TODO add right album picture\r\n        t.setText(\"Author:\" + track.getAlbum().getName());\r\n        t.setLayoutParams(params);\r\n        newTrack.addView(t);\r\n        LayoutSongs.addView(newTrack);\r\n        //per il bordo alla textview\r\n        GradientDrawable border = new GradientDrawable();\r\n        border.setStroke(2, 0xFF000000); //black border with full opacity\r\n        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {\r\n            newTrack.setBackgroundDrawable(border);\r\n        } else {\r\n            newTrack.setBackground(border);\r\n        }\r\n\r\n        if (newTrack.getParent() != null) {\r\n            ((ViewGroup) newTrack.getParent()).removeView(newTrack);\r\n        }\r\n\r\n        newTrack.setOnClickListener(v -> {\r\n            Api api = new Api(getContext());\r\n            api.getLyricsFromSongId(track.getId(), new VolleyResponseListenerLyrics() {\r\n                @Override\r\n                public void onResponse(LyricsInterface lyrics) throws JSONException {\r\n                    track.setLyrics(lyrics);\r\n                    dbHelper.addTrack(db, track);\r\n                    Intent activity = new Intent(v.getContext(), LyricsPage.class);\r\n                    activity.putExtra(\"track_id\", track.getId());\r\n                    startActivity(activity);\r\n                }\r\n\r\n                @Override\r\n                public void onError(String message) {\r\n                    Toast.makeText(getContext(), \"ERROR WHILE SEARCHING ITS LYRICS\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            });\r\n\r\n\r\n        });\r\n\r\n        LayoutSongs.addView(newTrack);\r\n\r\n\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group5/lyrics/SearchList.java b/app/src/main/java/com/group5/lyrics/SearchList.java
+--- a/app/src/main/java/com/group5/lyrics/SearchList.java	(revision eaedf8a33ddc194e9825deba64b63f50652b139d)
++++ b/app/src/main/java/com/group5/lyrics/SearchList.java	(date 1641461962030)
+@@ -111,11 +111,11 @@
+         newTrack.addView(text);
+         params = new RelativeLayout.LayoutParams(1000, 60);
+         params.setMargins(190, 50, 10, 10);
+-        TextView t = new TextView(this.getContext());
++        TextView tAuthor = new TextView(this.getContext());
+         //TODO add right album picture
+-        t.setText("Author:" + track.getAlbum().getName());
+-        t.setLayoutParams(params);
+-        newTrack.addView(t);
++        tAuthor.setText("Author:" + track.getAlbum().getName());
++        tAuthor.setLayoutParams(params);
++        newTrack.addView(tAuthor);
+         LayoutSongs.addView(newTrack);
+         //per il bordo alla textview
+         GradientDrawable border = new GradientDrawable();
+Index: app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group5.lyrics.ui.home;\r\n\r\nimport android.content.ComponentName;\r\nimport android.content.Intent;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.os.Bundle;\r\nimport android.provider.Settings;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.Menu;\r\nimport android.view.MenuInflater;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.AbsListView;\r\nimport android.widget.ImageButton;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.SearchView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.fragment.app.FragmentTransaction;\r\n\r\nimport com.group5.lyrics.Favourites;\r\nimport com.group5.lyrics.MainActivity;\r\nimport com.group5.lyrics.R;\r\nimport com.group5.lyrics.Recents;\r\nimport com.group5.lyrics.LyricsPage;\r\nimport com.group5.lyrics.SearchList;\r\nimport com.group5.lyrics.utilities.TrackListening;\r\nimport com.group5.lyrics.api.Api;\r\nimport com.group5.lyrics.api.VolleyResponseListenerLyrics;\r\nimport com.group5.lyrics.api.VolleyResponseListenerSong;\r\nimport com.group5.lyrics.databinding.FragmentHomeBinding;\r\nimport com.group5.lyrics.db.DatabaseHelper;\r\nimport com.group5.lyrics.db.Loader;\r\nimport com.group5.lyrics.db.LoaderInterface;\r\nimport com.group5.lyrics.models.song.LyricsInterface;\r\nimport com.group5.lyrics.models.song.TrackInterface;\r\n\r\nimport java.util.List;\r\n\r\npublic class HomeFragment extends Fragment {\r\n\r\n    private FragmentHomeBinding binding;\r\n    private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = \"android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS\";\r\n    String query;\r\n\r\n    /**\r\n     * This view is called every time we tap the button Home in the bottom left\r\n     *\r\n     * @param inflater\r\n     * @param container\r\n     * @param savedInstanceState\r\n     * @return\r\n     */\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\r\n        binding = FragmentHomeBinding.inflate(inflater, container, false);\r\n        View root = binding.getRoot();\r\n        TextView track_listening = root.findViewById(R.id.nowPlayingText);\r\n        track_listening.setText(TrackListening.TRACK_INFORMATION);\r\n        setHasOptionsMenu(true);\r\n\r\n        DatabaseHelper dbHelper = new DatabaseHelper(this.getContext());\r\n        SQLiteDatabase db = dbHelper.getWritableDatabase();\r\n        LoaderInterface loader = new Loader(dbHelper);\r\n        displayAllHomeTracks(root, loader);\r\n        track_listening.setText(TrackListening.isSongDetected(false));\r\n\r\n        ImageButton fab = binding.reloadButton;\r\n        fab.setOnClickListener(view -> {\r\n            if (isNotificationServiceEnabled()) {\r\n\r\n                if (TrackListening.IS_CHANGED && !TrackListening.TRACK_COUNTER.equals(TrackListening.TRACK_FOUND)) {\r\n                    Api api = new Api(getContext());\r\n                    api.searchBySongName(TrackListening.TRACK_FOUND, new VolleyResponseListenerSong() {\r\n                        @Override\r\n                        public void onResponse(List<TrackInterface> songs) {\r\n                            if (songs.isEmpty()) {\r\n                                TrackListening.TRACK_INFORMATION = \"No Lyrics Found for: \" + TrackListening.TRACK_FOUND;\r\n                                track_listening.setOnClickListener(v -> {\r\n                                });\r\n                            } else {\r\n                                TrackListening.TRACK_COUNTER = TrackListening.TRACK_FOUND;\r\n                                TrackListening.TRACK_INFORMATION = songs.get(0).getName() + \"\\t\\n\" + songs.get(0).getArtist().getName() + \"\\t\" + songs.get(0).getAlbum().getName() + \"\\t\";\r\n\r\n                                track_listening.setOnClickListener(v -> {\r\n                                    Api api = new Api(getContext());\r\n                                    api.getLyricsFromSongId(songs.get(0).getId(), new VolleyResponseListenerLyrics() {\r\n                                        @Override\r\n                                        public void onResponse(LyricsInterface lyrics) {\r\n                                            songs.get(0).setLyrics(lyrics);\r\n                                            dbHelper.addTrack(db, songs.get(0));\r\n                                            Intent activity = new Intent(v.getContext(), LyricsPage.class);\r\n                                            activity.putExtra(\"track_id\", songs.get(0).getId());\r\n                                            startActivity(activity);\r\n                                        }\r\n\r\n                                        @Override\r\n                                        public void onError(String message) {\r\n                                            Toast.makeText(getContext(), \"Impossible to reach the APIs server...\", Toast.LENGTH_SHORT).show();\r\n                                        }\r\n                                    });\r\n\r\n                                });\r\n                            }\r\n                            track_listening.setText(TrackListening.TRACK_INFORMATION);\r\n                        }\r\n\r\n                        @Override\r\n                        public void onError(String message) {\r\n                            Toast.makeText(getContext(), \"Error querying the APIs\", Toast.LENGTH_SHORT).show();\r\n                            Log.e(\"QUERY API ERROR:\", message);\r\n                        }\r\n                    });\r\n                } else if (TrackListening.IS_CHANGED && TrackListening.TRACK_COUNTER.equals(TrackListening.TRACK_FOUND))\r\n                    return;\r\n                else\r\n                    track_listening.setText(\"Start to listen to a song for seeing lyrics...\");\r\n\r\n\r\n            } else\r\n                track_listening.setText(\"Please Enable Notification Access\");\r\n        });\r\n\r\n        LinearLayout brecents = root.findViewById(R.id.RecentButton);\r\n        brecents.setOnClickListener(v -> {\r\n            recentList(this);\r\n        });\r\n\r\n        LinearLayout bfavourite = root.findViewById(R.id.FavoritesButton);\r\n        bfavourite.setOnClickListener(v -> {\r\n            favouritesList(this);\r\n        });\r\n\r\n        return root;\r\n    }\r\n\r\n    @Override\r\n\r\n    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {\r\n        // SEARCH BAR TODO REDO ALL\r\n        super.onCreateOptionsMenu(menu, inflater);\r\n        inflater.inflate(R.menu.menu, menu);\r\n        MenuItem item = menu.findItem(R.id.action_search);\r\n        SearchView searchView = new SearchView(((MainActivity) getContext()).getSupportActionBar().getThemedContext());\r\n        searchView.setQueryHint(\"Search\");\r\n        item.setActionView(searchView);\r\n        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {\r\n\r\n            @Override\r\n            public boolean onQueryTextSubmit(String q) {\r\n                query = q;\r\n                SearchList s = new SearchList(query);\r\n                searchList(HomeFragment.this);\r\n                return false;\r\n            }\r\n\r\n            //TODO implement search on every time you type\r\n            @Override\r\n            public boolean onQueryTextChange(String newText) {\r\n                return false;\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n    @Override\r\n    public void onDestroyView() {\r\n        super.onDestroyView();\r\n        binding = null;\r\n    }\r\n\r\n    void displayAllHomeTracks(View root, LoaderInterface loader) {\r\n        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);\r\n        LinearLayout linearLayoutRecents = root.findViewById(R.id.recentAll);\r\n        LinearLayout linearLayoutFavourites = root.findViewById(R.id.favoritesAll);\r\n\r\n        if (loader.getAllRecentsTracks().isEmpty()) {\r\n            createGridTrackAndDisplay(params, linearLayoutRecents, \"NO RECENT TRACKS\");\r\n        } else {\r\n            for (int i = 0; i < loader.getAllRecentsTracks().size(); i++) {\r\n                createGridTrackAndDisplay(params, linearLayoutRecents, loader.getAllRecentsTracks().get(i).getName(), loader.getAllRecentsTracks().get(i).getId());\r\n            }\r\n        }\r\n\r\n        if (loader.getAllFavouritesTracks().isEmpty()) {\r\n            createGridTrackAndDisplay(params, linearLayoutFavourites, \"NOT FAVOURITES TRACKS\");\r\n        } else {\r\n            for (int i = 0; i < loader.getAllFavouritesTracks().size(); i++) {\r\n                createGridTrackAndDisplay(params, linearLayoutFavourites, loader.getAllFavouritesTracks().get(i).getName(), loader.getAllFavouritesTracks().get(i).getId());\r\n            }\r\n        }\r\n    }\r\n\r\n    private void createGridTrackAndDisplay(RelativeLayout.LayoutParams params, LinearLayout linearLayoutRecents, String s) {\r\n        RelativeLayout newTrack = new RelativeLayout(this.getContext());\r\n        newTrack.setLayoutParams(params);\r\n        TextView text = new TextView(this.getContext());\r\n        text.setId(View.generateViewId());\r\n        text.setText(s);\r\n        linearLayoutRecents.addView(newTrack);\r\n    }\r\n\r\n    private void createGridTrackAndDisplay(RelativeLayout.LayoutParams params, LinearLayout linearLayoutRecents, String s, int id) {\r\n\r\n        RelativeLayout newTrack = new RelativeLayout(this.getContext());\r\n        newTrack.setLayoutParams(params);\r\n        TextView text = new TextView(this.getContext());\r\n        text.setId(View.generateViewId());\r\n        text.setText(s);\r\n        ImageButton img = new ImageButton(this.getContext());\r\n        params.setMargins(10, 10, 10, 10);\r\n        img.setBackgroundResource(R.drawable.cavalcade);\r\n        img.setLayoutParams(params);\r\n        img.setLayoutParams(new AbsListView.LayoutParams(260, 260));\r\n        params = new RelativeLayout.LayoutParams(260, 260);\r\n        params.setMargins(0, 260, 10, 10);\r\n        text.setLayoutParams(params);\r\n        newTrack.addView(text);\r\n        newTrack.addView(img);\r\n\r\n        img.setOnClickListener(v -> {\r\n            Intent activity = new Intent(v.getContext(), LyricsPage.class);\r\n            activity.putExtra(\"track_id\", id);\r\n            startActivity(activity);\r\n        });\r\n        linearLayoutRecents.addView(newTrack);\r\n    }\r\n\r\n    private boolean isNotificationServiceEnabled() {\r\n        final String allNames = Settings.Secure.getString(getContext().getContentResolver(), \"enabled_notification_listeners\");\r\n        if (allNames != null && !allNames.isEmpty()) {\r\n            for (String name : allNames.split(\":\")) {\r\n                if (getContext().getPackageName().equals(ComponentName.unflattenFromString(name).getPackageName())) {\r\n                    return true;\r\n                }\r\n            }\r\n        }\r\n        startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));\r\n        return false;\r\n    }\r\n\r\n    public void recentList(Fragment someFragment) {\r\n        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();\r\n        transaction.replace(R.id.homePage, new Recents());\r\n        transaction.addToBackStack(null);\r\n        transaction.commit();\r\n    }\r\n\r\n    public void searchList(Fragment someFragment) {\r\n        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();\r\n        transaction.replace(R.id.homePage, new SearchList(query));\r\n        transaction.addToBackStack(null);\r\n        transaction.commit();\r\n    }\r\n\r\n    public void favouritesList(Fragment someFragment) {\r\n        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();\r\n        transaction.replace(R.id.homePage, new Favourites());\r\n        transaction.addToBackStack(null);\r\n        transaction.commit();\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java b/app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java
+--- a/app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java	(revision eaedf8a33ddc194e9825deba64b63f50652b139d)
++++ b/app/src/main/java/com/group5/lyrics/ui/home/HomeFragment.java	(date 1641464895436)
+@@ -13,6 +13,7 @@
+ import android.view.View;
+ import android.view.ViewGroup;
+ import android.widget.AbsListView;
++import android.widget.FrameLayout;
+ import android.widget.ImageButton;
+ import android.widget.LinearLayout;
+ import android.widget.RelativeLayout;
+@@ -22,6 +23,7 @@
+ 
+ import androidx.annotation.NonNull;
+ import androidx.fragment.app.Fragment;
++import androidx.fragment.app.FragmentManager;
+ import androidx.fragment.app.FragmentTransaction;
+ 
+ import com.group5.lyrics.Favourites;
+@@ -48,6 +50,8 @@
+     private FragmentHomeBinding binding;
+     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
+     String query;
++    View root;
++    int id;
+ 
+     /**
+      * This view is called every time we tap the button Home in the bottom left
+@@ -59,7 +63,7 @@
+      */
+     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+         binding = FragmentHomeBinding.inflate(inflater, container, false);
+-        View root = binding.getRoot();
++        root = binding.getRoot();
+         TextView track_listening = root.findViewById(R.id.nowPlayingText);
+         track_listening.setText(TrackListening.TRACK_INFORMATION);
+         setHasOptionsMenu(true);
+@@ -205,7 +209,7 @@
+         linearLayoutRecents.addView(newTrack);
+     }
+ 
+-    private void createGridTrackAndDisplay(RelativeLayout.LayoutParams params, LinearLayout linearLayoutRecents, String s, int id) {
++    private void createGridTrackAndDisplay(RelativeLayout.LayoutParams params, LinearLayout linearLayoutRecents, String s, int ident) {
+ 
+         RelativeLayout newTrack = new RelativeLayout(this.getContext());
+         newTrack.setLayoutParams(params);
+@@ -224,9 +228,8 @@
+         newTrack.addView(img);
+ 
+         img.setOnClickListener(v -> {
+-            Intent activity = new Intent(v.getContext(), LyricsPage.class);
+-            activity.putExtra("track_id", id);
+-            startActivity(activity);
++            id = ident;
++            lyricsPagef(this);
+         });
+         linearLayoutRecents.addView(newTrack);
+     }
+@@ -265,4 +268,15 @@
+         transaction.commit();
+     }
+ 
++    public void lyricsPagef(Fragment someFragment) {
++        FrameLayout fl = (FrameLayout) root.findViewById(R.id.homePage);
++        fl.removeAllViews();
++        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
++        FragmentTransaction transaction = fragmentManager.beginTransaction();
++        transaction.replace(R.id.homePage, new LyricsPage(id));
++        transaction.addToBackStack(null);
++        transaction.commit();
++    }
++
++
+ }
+Index: app/src/main/java/com/group5/lyrics/LyricsPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group5.lyrics;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\n\r\nimport com.google.android.material.appbar.CollapsingToolbarLayout;\r\nimport com.google.android.material.floatingactionbutton.FloatingActionButton;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\n\r\nimport android.util.Log;\r\nimport android.widget.TextView;\r\n\r\nimport com.group5.lyrics.api.Api;\r\nimport com.group5.lyrics.databinding.ActivityLyricsPageBinding;\r\nimport com.group5.lyrics.db.DatabaseHelper;\r\nimport com.group5.lyrics.db.Loader;\r\nimport com.group5.lyrics.db.LoaderInterface;\r\nimport com.group5.lyrics.models.song.TrackInterface;\r\nimport com.group5.lyrics.utilities.BoolIntConverter;\r\n\r\npublic class LyricsPage extends AppCompatActivity {\r\n\r\n    private ActivityLyricsPageBinding binding;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n\r\n        binding = ActivityLyricsPageBinding.inflate(getLayoutInflater());\r\n        setContentView(binding.getRoot());\r\n\r\n        Toolbar toolbar = binding.toolbar;\r\n        setSupportActionBar(toolbar);\r\n        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;\r\n        TextView t = binding.getRoot().findViewById(R.id.lyrics);\r\n\r\n        DatabaseHelper dbHelper = new DatabaseHelper(LyricsPage.this);\r\n        LoaderInterface loader = new Loader(dbHelper);\r\n        Bundle extras = getIntent().getExtras();\r\n        TrackInterface track = loader.getTrack(extras.getInt(\"track_id\"));\r\n\r\n        if(track == null){\r\n            t.setText(\"SERIOUS ERROR\");\r\n            return;\r\n        }\r\n        toolBarLayout.setTitle(track.getName());\r\n        t.setText(track.getLyrics().getContent());\r\n\r\n        FloatingActionButton fab = binding.fab;\r\n        fab.setOnClickListener(v-> {\r\n            loader.changeTrackFavouriteParameter(track.getId(),BoolIntConverter.getIntFromBool(!track.isFavourite()));\r\n            Intent intent = getIntent();\r\n            finish();\r\n            startActivity(intent);\r\n        });\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group5/lyrics/LyricsPage.java b/app/src/main/java/com/group5/lyrics/LyricsPage.java
+--- a/app/src/main/java/com/group5/lyrics/LyricsPage.java	(revision eaedf8a33ddc194e9825deba64b63f50652b139d)
++++ b/app/src/main/java/com/group5/lyrics/LyricsPage.java	(date 1641465038513)
+@@ -1,15 +1,22 @@
+ package com.group5.lyrics;
+ 
++import android.annotation.SuppressLint;
+ import android.content.Intent;
+ import android.os.Bundle;
+ 
+ import com.google.android.material.appbar.CollapsingToolbarLayout;
+ import com.google.android.material.floatingactionbutton.FloatingActionButton;
+ 
++import androidx.activity.result.contract.ActivityResultContracts;
++import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.appcompat.widget.Toolbar;
++import androidx.fragment.app.Fragment;
+ 
+ import android.util.Log;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
+ import android.widget.TextView;
+ 
+ import com.group5.lyrics.api.Api;
+@@ -20,41 +27,50 @@
+ import com.group5.lyrics.models.song.TrackInterface;
+ import com.group5.lyrics.utilities.BoolIntConverter;
+ 
+-public class LyricsPage extends AppCompatActivity {
++public class LyricsPage extends Fragment {
++    int id;
++
++    public LyricsPage(int id) {
++        this.id = id;
++    }
+ 
+     private ActivityLyricsPageBinding binding;
+ 
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-
++    @SuppressLint("ResourceType")
++    public View onCreateView(@NonNull LayoutInflater inflater,
++                             ViewGroup container, Bundle savedInstanceState) {
+         binding = ActivityLyricsPageBinding.inflate(getLayoutInflater());
+-        setContentView(binding.getRoot());
+ 
+         Toolbar toolbar = binding.toolbar;
+-        setSupportActionBar(toolbar);
++        //setSupportActionBar(toolbar);
+         CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
+         TextView t = binding.getRoot().findViewById(R.id.lyrics);
+-
+-        DatabaseHelper dbHelper = new DatabaseHelper(LyricsPage.this);
++        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+         LoaderInterface loader = new Loader(dbHelper);
+-        Bundle extras = getIntent().getExtras();
+-        TrackInterface track = loader.getTrack(extras.getInt("track_id"));
++        TrackInterface track = loader.getTrack(id);
+ 
+-        if(track == null){
++        if (track == null) {
+             t.setText("SERIOUS ERROR");
+-            return;
++            return null;
+         }
++
+         toolBarLayout.setTitle(track.getName());
+         t.setText(track.getLyrics().getContent());
+ 
+         FloatingActionButton fab = binding.fab;
+-        fab.setOnClickListener(v-> {
+-            loader.changeTrackFavouriteParameter(track.getId(),BoolIntConverter.getIntFromBool(!track.isFavourite()));
+-            Intent intent = getIntent();
++        fab.setOnClickListener(v -> {
++            loader.changeTrackFavouriteParameter(track.getId(), BoolIntConverter.getIntFromBool(!track.isFavourite()));
++            /*Intent intent = getIntent();
+             finish();
+-            startActivity(intent);
++            startActivity(intent);*/
+         });
+ 
++        return binding.getRoot();
++    }
++
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
+     }
++
++
+ }
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable-v24/ic_launcher_foreground.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/background_splashscreen.xml\" value=\"0.14957264957264957\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_launcher_background.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_notifications_black_24dp.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_lyrics_page.xml\" value=\"0.15042735042735042\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml\" value=\"0.152\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_scrolling.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_scrolling.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_first.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.12\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml\" value=\"0.1539855072463768\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_second.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/test_track.xml\" value=\"0.20512820512820512\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_account_circle_24.xml\" value=\"0.17962962962962964\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.17962962962962964\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_scrolling.xml\" value=\"0.22554347826086957\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml\" value=\"0.22554347826086957\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml\" value=\"0.259375\" />\r\n        <entry key=\"app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.259375\" />\r\n        <entry key=\"app/src/main/res/layout/activity_main.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/activity_recents.xml\" value=\"0.12291666666666666\" />\r\n        <entry key=\"app/src/main/res/layout/content_recents.xml\" value=\"0.12291666666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_first.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_home.xml\" value=\"0.335\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_notifications.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_second.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/grid_item.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/login.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/menu/items.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/menu/menu.xml\" value=\"0.24322916666666666\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"11\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision eaedf8a33ddc194e9825deba64b63f50652b139d)
++++ b/.idea/misc.xml	(date 1641463542286)
+@@ -3,6 +3,7 @@
+   <component name="DesignSurface">
+     <option name="filePathToZoomLevelMap">
+       <map>
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_lyrics_page.xml" value="0.21614583333333334" />
+         <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml" value="0.264" />
+         <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+         <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21837606837606838" />

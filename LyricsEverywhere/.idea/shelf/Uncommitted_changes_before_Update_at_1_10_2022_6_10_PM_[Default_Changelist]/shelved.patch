@@ -1,0 +1,135 @@
+Index: app/src/main/java/com/group5/lyrics/ui/lyrics/LyricsPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group5.lyrics.ui.lyrics;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.os.Bundle;\r\n\r\nimport com.google.android.material.appbar.CollapsingToolbarLayout;\r\nimport com.google.android.material.floatingactionbutton.FloatingActionButton;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.widget.Toolbar;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.fragment.app.FragmentManager;\r\nimport androidx.fragment.app.FragmentTransaction;\r\n\r\nimport android.util.Log;\r\nimport android.view.KeyEvent;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.view.WindowManager;\r\nimport android.widget.FrameLayout;\r\nimport android.widget.TextView;\r\n\r\nimport com.group5.lyrics.R;\r\nimport com.group5.lyrics.databinding.FragmentLyricsPageBinding;\r\nimport com.group5.lyrics.db.DatabaseHelper;\r\nimport com.group5.lyrics.db.Loader;\r\nimport com.group5.lyrics.db.LoaderInterface;\r\nimport com.group5.lyrics.models.song.TrackInterface;\r\nimport com.group5.lyrics.models.user.UserSettingsInterface;\r\nimport com.group5.lyrics.ui.home.HomeFragment;\r\nimport com.group5.lyrics.utilities.BoolIntConverter;\r\n\r\npublic class LyricsPage extends Fragment {\r\n    TrackInterface track;\r\n    View root;\r\n\r\n    public LyricsPage(TrackInterface track) {\r\n        this.track = track;\r\n    }\r\n\r\n    private FragmentLyricsPageBinding binding;\r\n\r\n    @SuppressLint(\"ResourceType\")\r\n    public View onCreateView(@NonNull LayoutInflater inflater,\r\n                             ViewGroup container, Bundle savedInstanceState) {\r\n        binding = FragmentLyricsPageBinding.inflate(inflater, container, false);\r\n        root = binding.getRoot();\r\n        Toolbar toolbar = binding.toolbar;\r\n        setHasOptionsMenu(true);\r\n        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;\r\n        TextView t = binding.getRoot().findViewById(R.id.lyrics);\r\n        DatabaseHelper dbHelper = new DatabaseHelper(getContext());\r\n\r\n        SQLiteDatabase db = dbHelper.getWritableDatabase();\r\n        long result = dbHelper.addTrack(db, track);\r\n        Log.e(\"INSERT STATUS:\", String.valueOf(result));\r\n        LoaderInterface loader = new Loader(dbHelper);\r\n\r\n\r\n        UserSettingsInterface userSettings = dbHelper.getUserSettings(db);\r\n        if (userSettings.getScreenAlwaysActive()) {\r\n            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);\r\n        }\r\n\r\n        if (track == null) {\r\n            t.setText(\"SERIOUS ERROR\");\r\n            return null;\r\n        }\r\n        TextView details = root.findViewById(R.id.artistAlbum);\r\n        details.setText(\"Artist: \" + track.getArtist().getName() + \" Album: \" + track.getAlbum().getName());\r\n        toolBarLayout.setTitle(track.getName());\r\n        t.setText(track.getLyrics().getContent());\r\n\r\n        FloatingActionButton favouriteButton = binding.favouriteButton;\r\n        if (track.isFavourite())\r\n            favouriteButton.setImageResource(R.drawable.ic_baseline_heart_broken_24);\r\n        else\r\n            favouriteButton.setImageResource(R.drawable.ic_baseline_favorite_24);\r\n\r\n        favouriteButton.setOnClickListener(v -> {\r\n            if (track.isFavourite()) {\r\n                track.setFavourite(false);\r\n            } else {\r\n                track.setFavourite(true);\r\n            }\r\n\r\n            loader.changeTrackFavouriteParameter(track.getId(), BoolIntConverter.getIntFromBool(track.isFavourite()));\r\n            LyricsPage fragment = null;\r\n            fragment = new LyricsPage(track);\r\n            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();\r\n            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();\r\n            FrameLayout fl = getActivity().findViewById(R.id.lyricsPage);\r\n            fl.removeAllViews();\r\n            fragmentTransaction.replace(R.id.lyricsPage, fragment);\r\n            fragmentTransaction.commit();\r\n        });\r\n\r\n        return binding.getRoot();\r\n    }\r\n\r\n    @Override\r\n    public void onResume() {\r\n\r\n        super.onResume();\r\n\r\n        getView().setFocusableInTouchMode(true);\r\n        getView().requestFocus();\r\n        getView().setOnKeyListener((v, keyCode, event) -> {\r\n\r\n            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {\r\n\r\n                HomeFragment fragment = null;\r\n                fragment = new HomeFragment();\r\n                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();\r\n                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();\r\n                FrameLayout fl = getActivity().findViewById(R.id.lyricsPage);\r\n                fl.removeAllViews();\r\n                fragmentTransaction.replace(R.id.lyricsPage, fragment);\r\n                fragmentTransaction.commit();\r\n\r\n\r\n                return true;\r\n\r\n            }\r\n\r\n            return false;\r\n        });\r\n    }\r\n\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group5/lyrics/ui/lyrics/LyricsPage.java b/app/src/main/java/com/group5/lyrics/ui/lyrics/LyricsPage.java
+--- a/app/src/main/java/com/group5/lyrics/ui/lyrics/LyricsPage.java	(revision 0b19d9f3ee7d84ed0a9cf53dca0e2754771b9965)
++++ b/app/src/main/java/com/group5/lyrics/ui/lyrics/LyricsPage.java	(date 1641833853933)
+@@ -68,10 +68,11 @@
+             t.setText("SERIOUS ERROR");
+             return null;
+         }
+-        TextView details = root.findViewById(R.id.artistAlbum);
++        t.setText(track.getLyrics().getContent());
++        TextView details=root.findViewById(R.id.artistAlbum);
+         details.setText("Artist: " + track.getArtist().getName() + " Album: " + track.getAlbum().getName());
+         toolBarLayout.setTitle(track.getName());
+-        t.setText(track.getLyrics().getContent());
++
+ 
+         FloatingActionButton favouriteButton = binding.favouriteButton;
+         if (track.isFavourite())
+Index: app/src/main/res/layout/content_scrolling.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.core.widget.NestedScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    app:layout_behavior=\"@string/appbar_scrolling_view_behavior\"\r\n    tools:context=\".ui.lyrics.LyricsPage\"\r\n    tools:showIn=\"@layout/fragment_lyrics_page\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/lyrics\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_margin=\"@dimen/text_margin\"\r\n        android:text=\"@string/large_text\" />\r\n\r\n</androidx.core.widget.NestedScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/content_scrolling.xml b/app/src/main/res/layout/content_scrolling.xml
+--- a/app/src/main/res/layout/content_scrolling.xml	(revision 0b19d9f3ee7d84ed0a9cf53dca0e2754771b9965)
++++ b/app/src/main/res/layout/content_scrolling.xml	(date 1641834456630)
+@@ -1,18 +1,40 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
++    android:layout_width="936dp"
++    android:layout_height="1240dp"
+     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+     tools:context=".ui.lyrics.LyricsPage"
+     tools:showIn="@layout/fragment_lyrics_page">
+ 
++    <TextView
++        android:id="@+id/artistAlbum"
++        android:layout_width="409dp"
++        android:layout_height="32dp"
++        android:layout_marginStart="10dp"
++        android:layout_marginTop="8dp"
++        android:layout_marginBottom="1dp"
++        android:text="ARTIST"
++        android:textColor="@color/white"
++        android:textSize="15sp"
++        android:textStyle="bold"
++        app:layout_constraintBottom_toTopOf="@+id/lyrics"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
++
+     <TextView
+         android:id="@+id/lyrics"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_margin="@dimen/text_margin"
+-        android:text="@string/large_text" />
++        android:layout_width="367dp"
++        android:layout_height="1973dp"
++        android:layout_marginStart="16dp"
++        android:layout_marginTop="28dp"
++        android:layout_marginEnd="16dp"
++        android:text="@string/large_text"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
+ 
+-</androidx.core.widget.NestedScrollView>
+\ No newline at end of file
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_lyrics_page.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    android:orientation=\"vertical\"\r\n    >\r\n<LinearLayout\r\n    android:layout_width=\"wrap_content\"\r\n    android:layout_height=\"wrap_content\"\r\n    android:orientation=\"vertical\"\r\n    >\r\n\r\n    <FrameLayout\r\n        android:id=\"@+id/lyricsPage\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\">\r\n\r\n            <androidx.coordinatorlayout.widget.CoordinatorLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:fitsSystemWindows=\"false\"\r\n                tools:context=\".ui.home.HomeFragment\">\r\n\r\n\r\n                <com.google.android.material.appbar.AppBarLayout\r\n                    android:id=\"@+id/app_bar\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"200dp\"\r\n                    android:fitsSystemWindows=\"true\"\r\n                    android:theme=\"@style/Theme.LyricsEverywhere.AppBarOverlay\">\r\n\r\n\r\n                    <com.google.android.material.appbar.CollapsingToolbarLayout\r\n                        android:id=\"@+id/toolbar_layout\"\r\n                        style=\"@style/Widget.MaterialComponents.Toolbar.Primary\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:fitsSystemWindows=\"true\"\r\n                        app:contentScrim=\"?attr/colorPrimary\"\r\n                        app:layout_scrollFlags=\"scroll|exitUntilCollapsed\"\r\n                        app:title=\"Slow\"\r\n                        app:toolbarId=\"@+id/toolbar\">\r\n\r\n\r\n                        <ImageView\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:scaleType=\"centerCrop\"\r\n                            android:src=\"@drawable/cavalcade\"\r\n\r\n                            />\r\n\r\n                        <androidx.appcompat.widget.Toolbar\r\n                            android:id=\"@+id/toolbar\"\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"?attr/actionBarSize\"\r\n                            app:layout_collapseMode=\"pin\"\r\n                            app:theme=\"@style/ToolbarTheme\" />\r\n\r\n                    </com.google.android.material.appbar.CollapsingToolbarLayout>\r\n                </com.google.android.material.appbar.AppBarLayout>\r\n\r\n                <include\r\n                    android:id=\"@+id/include\"\r\n                    layout=\"@layout/content_scrolling\" />\r\n\r\n                <TextView\r\n                    android:id=\"@+id/artistAlbum\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"56dp\"\r\n                    android:layout_marginStart=\"30dp\"\r\n                    android:text=\"ARTIST\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"15sp\"\r\n                    android:textStyle=\"bold\"\r\n                    app:layout_anchor=\"@+id/include\"\r\n                    app:layout_anchorGravity=\"center|top\" />\r\n                <com.google.android.material.floatingactionbutton.FloatingActionButton\r\n                    android:id=\"@+id/favouriteButton\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginEnd=\"@dimen/fab_margin\"\r\n                    app:layout_anchor=\"@id/app_bar\"\r\n                    app:layout_anchorGravity=\"bottom|end\" />\r\n\r\n            </androidx.coordinatorlayout.widget.CoordinatorLayout>\r\n    </FrameLayout>\r\n</LinearLayout>\r\n\r\n</ScrollView>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_lyrics_page.xml b/app/src/main/res/layout/fragment_lyrics_page.xml
+--- a/app/src/main/res/layout/fragment_lyrics_page.xml	(revision 0b19d9f3ee7d84ed0a9cf53dca0e2754771b9965)
++++ b/app/src/main/res/layout/fragment_lyrics_page.xml	(date 1641830625927)
+@@ -67,17 +67,6 @@
+                     android:id="@+id/include"
+                     layout="@layout/content_scrolling" />
+ 
+-                <TextView
+-                    android:id="@+id/artistAlbum"
+-                    android:layout_width="match_parent"
+-                    android:layout_height="56dp"
+-                    android:layout_marginStart="30dp"
+-                    android:text="ARTIST"
+-                    android:textColor="@color/white"
+-                    android:textSize="15sp"
+-                    android:textStyle="bold"
+-                    app:layout_anchor="@+id/include"
+-                    app:layout_anchorGravity="center|top" />
+                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                     android:id="@+id/favouriteButton"
+                     android:layout_width="wrap_content"
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/menu.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable-v24/ic_launcher_foreground.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/background_splashscreen.xml\" value=\"0.14957264957264957\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_launcher_background.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_notifications_black_24dp.xml\" value=\"0.21837606837606838\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml\" value=\"0.152\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_scrolling.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_scrolling.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_first.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.12\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml\" value=\"0.1539855072463768\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_second.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/test_track.xml\" value=\"0.20512820512820512\" />\r\n        <entry key=\"..\\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_account_circle_24.xml\" value=\"0.17962962962962964\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.17962962962962964\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_main.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_recents.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/activity_scrolling.xml\" value=\"0.22554347826086957\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_recents.xml\" value=\"0.22554347826086957\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_notifications.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/grid_item.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"..\\:/xampp/htdocs/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/bottom_nav_menu.xml\" value=\"0.19895833333333332\" />\r\n        <entry key=\"app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml\" value=\"0.259375\" />\r\n        <entry key=\"app/src/main/res/drawable/ic_baseline_search_24.xml\" value=\"0.24427083333333333\" />\r\n        <entry key=\"app/src/main/res/drawable/ic_baseline_settings_24.xml\" value=\"0.259375\" />\r\n        <entry key=\"app/src/main/res/layout/activity_main.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/activity_recents.xml\" value=\"0.12291666666666666\" />\r\n        <entry key=\"app/src/main/res/layout/content_recents.xml\" value=\"0.12291666666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_dashboard.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_favourites.xml\" value=\"0.228125\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_first.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_home.xml\" value=\"0.25\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_lyrics_page.xml\" value=\"0.228125\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_notifications.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_recents.xml\" value=\"0.228125\" />\r\n        <entry key=\"app/src/main/res/layout/fragment_second.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/grid_item.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/layout/login.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/menu/items.xml\" value=\"0.24322916666666666\" />\r\n        <entry key=\"app/src/main/res/menu/menu.xml\" value=\"0.24322916666666666\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"11\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 0b19d9f3ee7d84ed0a9cf53dca0e2754771b9965)
++++ b/.idea/misc.xml	(date 1641834057349)
+@@ -3,8 +3,11 @@
+   <component name="DesignSurface">
+     <option name="filePathToZoomLevelMap">
+       <map>
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/content_scrolling.xml" value="0.2" />
+         <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_dashboard.xml" value="0.264" />
+         <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_home.xml" value="0.264" />
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/fragment_lyrics_page.xml" value="0.27692307692307694" />
++        <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/layout/layout_item.xml" value="0.264" />
+         <entry key="..\:/Users/SaliS/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/menu/menu.xml" value="0.1" />
+         <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21837606837606838" />
+         <entry key="..\:/Users/aledo/AndroidStudioProjects/project-assignment-ht21-group-5/LyricsEverywhere/app/src/main/res/drawable/background_splashscreen.xml" value="0.14957264957264957" />
